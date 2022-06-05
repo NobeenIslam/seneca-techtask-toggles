@@ -1,6 +1,3 @@
-export function Toggle():JSX.Element{
-    return (
-        <>
-        </>
-    )
+export function Toggle(): JSX.Element {
+  return <></>;
 }

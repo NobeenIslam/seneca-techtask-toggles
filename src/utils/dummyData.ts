@@ -1,6 +1,7 @@
-import { Question } from "./Interfaces";
+import { QuestionInterface } from "./Interfaces";
 
-export const questionOne: Question = {
+export const questionOne: QuestionInterface = {
+  questionId: 1,
   question: "What is in an animal cell?",
   optionOne: ["Cell Wall", "Ribosomes"],
   optionTwo: ["Cytoplasms", "Chloroplast"],
@@ -12,7 +13,8 @@ export const questionOne: Question = {
   answerFour: "Cellulose",
 };
 
-export const questionTwo: Question = {
+export const questionTwo: QuestionInterface = {
+  questionId: 2,
   question: "What are the ideal conditions inside an office",
   optionOne: ["Good pay", "Bad pay"],
   optionTwo: ["Lots of meetings", "Less meetings"],
@@ -24,10 +26,17 @@ export const questionTwo: Question = {
   answerFour: "Bear in office",
 };
 
-export const questionThree: Question = {
+export const questionThree: QuestionInterface = {
+  questionId: 3,
   question: "What are the best sports people & teams?",
   optionOne: ["Liverpool", "Chelsea", "Man Utd"],
   optionTwo: ["Serena Williams", "Naomi Osaka"],
   answerOne: "Liverpool",
   answerTwo: "Naomi Osaka",
 };
+
+export const dummyQuestions: QuestionInterface[] = [
+  questionOne,
+  questionTwo,
+  questionThree,
+];
