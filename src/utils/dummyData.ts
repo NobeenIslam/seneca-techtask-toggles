@@ -3,36 +3,35 @@ import { QuestionInterface } from "./Interfaces";
 export const questionOne: QuestionInterface = {
   questionId: 1,
   question: "What is in an animal cell?",
-  optionOne: ["Cell Wall", "Ribosomes"],
-  optionTwo: ["Cytoplasms", "Chloroplast"],
-  optionThree: ["Partially permeable membrane", " Impermeable membrane"],
-  optionFour: ["Cellulose, Mitochondria"],
-  answerOne: "Ribosomes",
-  answerTwo: "Chloroplast",
-  answerThree: "Impermeable Membrane",
-  answerFour: "Cellulose",
+  options: [
+    ["Cell Wall", "Ribosomes"],
+    ["Cytoplasms", "Chloroplast"],
+    ["Partially permeable membrane", " Impermeable membrane"],
+    ["Cellulose, Mitochondria"],
+  ],
+  answers: ["Ribosomes", "Chloroplast", "Impermeable Membrane", "Cellulose"],
 };
 
 export const questionTwo: QuestionInterface = {
   questionId: 2,
   question: "What are the ideal conditions inside an office",
-  optionOne: ["Good pay", "Bad pay"],
-  optionTwo: ["Lots of meetings", "Less meetings"],
-  optionThree: ["Free coffee", "Expensive coffee"],
-  optionFour: ["Bear in office", "Dog in office"],
-  answerOne: "Good pay",
-  answerTwo: "Lots of meetings",
-  answerThree: "Free coffee",
-  answerFour: "Bear in office",
+  options: [
+    ["Good pay", "Bad pay"],
+    ["Lots of meetings", "Less meetings"],
+    ["Free coffee", "Expensive coffee"],
+    ["Bear in office", "Dog in office"],
+  ],
+  answers: ["Good pay", "Lots of meetings", "Free coffee", "Bear in office"],
 };
 
 export const questionThree: QuestionInterface = {
   questionId: 3,
   question: "What are the best sports people & teams?",
-  optionOne: ["Liverpool", "Chelsea", "Man Utd"],
-  optionTwo: ["Serena Williams", "Naomi Osaka"],
-  answerOne: "Liverpool",
-  answerTwo: "Naomi Osaka",
+  options: [
+    ["Liverpool", "Chelsea", "Man Utd"],
+    ["Serena Williams", "Naomi Osaka"],
+  ],
+  answers: ["Liverpool", "Naomi Osaka"],
 };
 
 export const dummyQuestions: QuestionInterface[] = [
