@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Question } from "./components/Question";
+import { QuestionPage } from "./components/QuestionPage";
 import { dummyQuestions } from "./utils/dummyData";
 import { QuestionInterface } from "./utils/Interfaces";
 
@@ -12,7 +12,7 @@ function App(): JSX.Element {
 
   return (
     <>
-      <Question />
+      <QuestionPage questions={questions} />
     </>
   );
 }
