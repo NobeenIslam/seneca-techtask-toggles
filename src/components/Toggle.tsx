@@ -1,8 +1,5 @@
-import {
-  StateInterface,
-  StateAction,
-  stateActionsLibrary,
-} from "../utils/QuestionStateManager";
+import { useState } from "react";
+import { StateInterface, StateAction } from "../utils/QuestionStateManager";
 
 interface ToggleProps {
   option: string[];
@@ -10,33 +7,36 @@ interface ToggleProps {
   dispatch: React.Dispatch<StateAction>;
 }
 
+interface SelectedStyleInterface {
+  left: string;
+  right: string;
+}
+
 export function Toggle({ option, state, dispatch }: ToggleProps): JSX.Element {
+  const [selectedStyle, setSelectedStyle] = useState<SelectedStyleInterface>({
+    left: "unselected",
+    right: "unselected",
+  });
+
   function handleClickLeftOption() {
-    dispatch({
-      type: stateActionsLibrary.SET_LEFT_SELECTED_STYLE,
-      payload: { ...state, leftSelectedStyle: "selectedIncorrect" },
-    });
-    //the disabling of the other option is done directly in reducer
+    setSelectedStyle({ left: "selectedIncorrect", right: "unselected" });
   }
 
   function handleClickRightOption() {
-    dispatch({
-      type: stateActionsLibrary.SET_RIGHT_SELECTED_STYLE,
-      payload: { ...state, rightSelectedStyle: "selectedIncorrect" },
-    });
+    setSelectedStyle({ left: "unselected", right: "selectedIncorrect" });
   }
 
   return (
     <section className="d-flex flex-row rectangle mb-2 mx-auto">
       <div
         onClick={handleClickLeftOption}
-        className={`d-flex flex-column w-50 ${state.leftSelectedStyle}`}
+        className={`d-flex flex-column w-50 ${selectedStyle.left}`}
       >
         <p className="m-auto defaultFont">{option[0]}</p>
       </div>
       <div
         onClick={handleClickRightOption}
-        className={`d-flex flex-column w-50 ${state.rightSelectedStyle}`}
+        className={`d-flex flex-column w-50 ${selectedStyle.right}`}
       >
         <p className="m-auto defaultFont">{option[1]}</p>
       </div>
