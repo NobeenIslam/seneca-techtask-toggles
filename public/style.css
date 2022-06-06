@@ -1,46 +1,15 @@
-.rectangle {
-  box-sizing: border-box;
-  width: 900px;
-  height: 80px;
+/* Question Page CSS */
 
-  border: 2px solid #f9d29f;
-  border-radius: 100px;
+.background-incorrect {
+  background: linear-gradient(180deg, #f6b868 0%, #ee6b2d 100%);
 }
 
-.optionBox {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 21px 157px;
-  gap: 10px;
-
-  border-radius: 100px;
+.background-correct {
+  background: linear-gradient(180deg, #76e0c2 0%, #59cada 100%);
 }
 
-.optionBoxSelected {
-  background: #f8caa3;
-}
-
-.optionTextUnselected {
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 160%;
-  /* or 38px */
-  /* White */
-
-  color: #ffffff;
-}
-
-.optionTextSelected {
-  width: 132px;
-  height: 38px;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 160%;
-  /* or 38px */
-
-  color: #9f938b;
+.background-semi-correct {
+  background: linear-gradient(180deg, #f6b868 0%, #ee6b2d 100%);
 }
 
 .questionText {
@@ -71,14 +40,79 @@
   justify-content: center;
 }
 
-.background-incorrect {
-  background: linear-gradient(180deg, #f6b868 0%, #ee6b2d 100%);
+/* Toggles */
+.toggleBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.background-correct {
-  background: linear-gradient(180deg, #76e0c2 0%, #59cada 100%);
+.rectangle {
+  margin: auto auto 20px;
+
+  display: flex;
+  flex-direction: row;
+  width: 900px;
+  height: 80px;
+  border: 2px solid #f9d29f;
+  box-sizing: border-box;
+  border-radius: 100px;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
-.background-semi-correct {
-  background: linear-gradient(180deg, #f6b868 0%, #ee6b2d 100%);
+.optionBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 21px 157px;
+  gap: 10px;
+
+  border-radius: 100px;
+}
+
+.selectedIncorrect {
+  background: #f8caa3;
+}
+
+.selectedSemiCorrect {
+  background: #f2cbbd;
+}
+
+.selectedCorrect {
+  background: #a5e7e2;
+}
+
+.textUnselected {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 160%;
+  /* or 38px */
+  /* White */
+
+  color: #ffffff;
+}
+
+.textSelected {
+  width: 132px;
+  height: 38px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 160%;
+  /* or 38px */
+
+  color: #9f938b;
+}
+
+/* Debugging */
+.red {
+  background-color: red;
+  border: solid black;
+}
+
+.green {
+  background-color: green;
+  border: solid black;
 }

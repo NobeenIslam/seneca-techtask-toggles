@@ -1,15 +1,18 @@
-import { QuestionInterface } from "../utils/Interfaces";
-
 interface ToggleProps {
-  question: QuestionInterface;
+  option: string[];
 }
 
-export function Toggle({ question }: ToggleProps): JSX.Element {
-  console.log("First Question", question);
+export function Toggle({ option }: ToggleProps): JSX.Element {
+  console.log(option);
   return (
-    <>
-      <div>Test</div>
-      <div>Test</div>
-    </>
+    <section className="rectangle red">
+      <div className="optionBox">
+        <p className="defaultText textUnselected">{option[0]}</p>
+      </div>
+
+      <div className="optionBox ">
+        <p className="defaultText textUnselected">{option[1]}</p>
+      </div>
+    </section>
   );
 }
