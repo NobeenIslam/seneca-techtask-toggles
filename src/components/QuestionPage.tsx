@@ -13,14 +13,17 @@ export function QuestionPage({ state, dispatch }: QuestionProps): JSX.Element {
   );
 
   return (
-    <main className="backgroundIncorrect">
-      <h1 className="text-center defaultFont questionText">
-        Place Holder Question
-      </h1>
-      <section className="container">{questionToggles}</section>
-      <h2 className="text-center defaultFont resultText">
-        The answer is incorrect
-      </h2>
+    <main className="backgroundIncorrect pageSize">
+      <div>""</div>
+      <section className="mt-5">
+        <h1 className="text-center defaultFont questionText mb-5">
+          Place Holder Question
+        </h1>
+        <section className="container mx-auto mb-5">{questionToggles}</section>
+        <h2 className="text-center defaultFont resultText">
+          The answer is incorrect
+        </h2>
+      </section>
     </main>
   );
 }
