@@ -1,7 +1,17 @@
-import { greet } from "./utils/greet";
+import { useReducer } from "react";
+import { QuestionPage } from "./components/QuestionPage";
+import { initialState, reducer } from "./utils/QuestionStateManager";
 
 function App(): JSX.Element {
-  return <h1>{greet("World")}</h1>;
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  console.log(state);
+
+  return (
+    <>
+      <QuestionPage state={state} dispatch={dispatch} />
+    </>
+  );
 }
 
 export default App;
