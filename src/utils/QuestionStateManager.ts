@@ -1,3 +1,4 @@
+import { dummyQuestions } from "./dummyData";
 import { QuestionInterface } from "./Interfaces";
 
 export const stateActionsLibrary = {
@@ -13,7 +14,7 @@ export interface StateInterface {
 }
 
 export const initialState: StateInterface = {
-  questions: [],
+  questions: dummyQuestions,
   answers: [],
   is_locked: false,
 };

@@ -7,7 +7,7 @@ export const questionOne: QuestionInterface = {
     ["Cell Wall", "Ribosomes"],
     ["Cytoplasms", "Chloroplast"],
     ["Partially permeable membrane", " Impermeable membrane"],
-    ["Cellulose, Mitochondria"],
+    ["Cellulose", "Mitochondria"],
   ],
   answers: ["Ribosomes", "Chloroplast", "Impermeable Membrane", "Cellulose"],
 };
