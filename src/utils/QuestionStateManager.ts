@@ -21,8 +21,8 @@ export const initialState: StateInterface = {
   questions: dummyQuestions,
   answers: [],
   is_locked: false,
-  leftSelectedStyle: "",
-  rightSelectedStyle: "",
+  leftSelectedStyle: "unselected",
+  rightSelectedStyle: "unselected",
 };
 
 export interface StateAction {

@@ -19,7 +19,7 @@ export function QuestionPage({ state, dispatch }: QuestionProps): JSX.Element {
       <div>""</div>
       <section className="mt-5">
         <h1 className="text-center defaultFont questionText mb-5">
-          Place Holder Question
+          {state.questions[0].question}
         </h1>
         <section className="container mx-auto mb-5">{questionToggles}</section>
         <h2 className="text-center defaultFont resultText">
