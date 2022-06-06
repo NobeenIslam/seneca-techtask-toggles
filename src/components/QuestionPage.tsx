@@ -9,7 +9,9 @@ interface QuestionProps {
 export function QuestionPage({ state, dispatch }: QuestionProps): JSX.Element {
   const questionOptions = state.questions[0].options;
   const questionToggles: JSX.Element[] = questionOptions.map(
-    (option, index) => <Toggle key={index} option={option} />
+    (option, index) => (
+      <Toggle key={index} option={option} state={state} dispatch={dispatch} />
+    )
   );
 
   return (
