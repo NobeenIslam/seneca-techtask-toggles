@@ -39,9 +39,13 @@ export function Toggle({
   const optionOne = option[0];
   const optionTwo = option[1];
 
-  function handleClickLeftOption() {
-    setIsSelected({ left: true, right: false });
-    state.selectedAnswers[optionNum] = optionOne;
+  function handleClickToggle(
+    toggleSelection: isSelectedInterface,
+    optionSelection: string
+  ) {
+    console.log("toggle clicked");
+    setIsSelected(toggleSelection);
+    state.selectedAnswers[optionNum] = optionSelection;
     const newSelectedAnswers = [...state.selectedAnswers];
 
     const areSelectionsCorrect: boolean[] = newSelectedAnswers.map(
@@ -62,53 +66,6 @@ export function Toggle({
         answerAssessment: answerAssessment,
       },
     });
-    if (answerAssessment === assessmentLibrary.CORRECT) {
-      dispatch({
-        type: stateActionsLibrary.SET_TOGGLE_STYLE,
-        payload: { ...state, toggleStyle: "selectedCorrect" },
-      });
-    } else if (answerAssessment === assessmentLibrary.ALMOST_THERE) {
-      dispatch({
-        type: stateActionsLibrary.SET_TOGGLE_STYLE,
-        payload: { ...state, toggleStyle: "selectedAlmostThere" },
-      });
-    } else if (answerAssessment === assessmentLibrary.GETTING_BETTER) {
-      dispatch({
-        type: stateActionsLibrary.SET_TOGGLE_STYLE,
-        payload: { ...state, toggleStyle: "selectedGettingBetter" },
-      });
-    } else if (answerAssessment === assessmentLibrary.INCORRECT) {
-      dispatch({
-        type: stateActionsLibrary.SET_TOGGLE_STYLE,
-        payload: { ...state, toggleStyle: "selectedAlmostThere" },
-      });
-    }
-  }
-
-  function handleClickRightOption() {
-    setIsSelected({ left: false, right: true });
-    state.selectedAnswers[optionNum] = optionTwo;
-    const newSelectedAnswers = [...state.selectedAnswers];
-
-    const areSelectionsCorrect: boolean[] = newSelectedAnswers.map(
-      (selectedAnswer, answerIndex) =>
-        selectedAnswer === actualAnswers[answerIndex]
-    );
-
-    const answerAssessment = giveAnswerAssessment(
-      areSelectionsCorrect,
-      assessmentLibrary
-    );
-
-    dispatch({
-      type: stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT,
-      payload: {
-        ...state,
-        selectedAnswers: newSelectedAnswers,
-        answerAssessment: answerAssessment,
-      },
-    });
-
     if (answerAssessment === assessmentLibrary.CORRECT) {
       dispatch({
         type: stateActionsLibrary.SET_TOGGLE_STYLE,
@@ -138,13 +95,17 @@ export function Toggle({
   return (
     <section className="d-flex flex-row rectangle mb-2 mx-auto">
       <div
-        onClick={handleClickLeftOption}
+        onClick={() =>
+          handleClickToggle({ left: true, right: false }, optionOne)
+        }
         className={`d-flex flex-column w-50 ${leftToggleStyle}`}
       >
         <p className="m-auto defaultFont">{optionOne}</p>
       </div>
       <div
-        onClick={handleClickRightOption}
+        onClick={() =>
+          handleClickToggle({ left: false, right: true }, optionTwo)
+        }
         className={`d-flex flex-column w-50 ${rightToggleStyle}`}
       >
         <p className="m-auto defaultFont">{optionTwo}</p>
