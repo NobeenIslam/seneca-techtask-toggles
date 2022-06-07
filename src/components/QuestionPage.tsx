@@ -99,7 +99,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     <main className={`${backgroundStyle} pageSize`}>
       <div>""</div>
       <section className="mt-1">
-      <div className="d-flex flex-row justify-content-center">
+        <div className="d-flex flex-row justify-content-center">
           {" "}
           <Link key={questionId} to="/">
             <button className="defaultFont btn btn-success btn-lg m-2">
