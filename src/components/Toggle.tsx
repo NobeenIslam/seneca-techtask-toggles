@@ -41,22 +41,22 @@ export function Toggle({
     state.selectedAnswers[optionNum] = optionOne;
     const newSelectedAnswers = [...state.selectedAnswers];
 
-    const markedAnswers: boolean[] = newSelectedAnswers.map(
+    const areSelectionsCorrect: boolean[] = newSelectedAnswers.map(
       (selectedAnswer, answerIndex) =>
         selectedAnswer === actualAnswers[answerIndex]
     );
 
     const answerAssessment = giveAnswerAssessment(
-      markedAnswers,
+      areSelectionsCorrect,
       assessmentLibrary
     );
 
     dispatch({
-      type: stateActionsLibrary.SET_SELECTED_ANSWERS_AND_MARK,
+      type: stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT,
       payload: {
         ...state,
         selectedAnswers: newSelectedAnswers,
-        actualAnswers: actualAnswers,
+        answerAssessment: answerAssessment,
       },
     });
     if (answerAssessment === assessmentLibrary.CORRECT) {
@@ -73,14 +73,6 @@ export function Toggle({
   function handleClickRightOption() {
     state.selectedAnswers[optionNum] = optionTwo;
     const newSelectedAnswers = [...state.selectedAnswers];
-    dispatch({
-      type: stateActionsLibrary.SET_SELECTED_ANSWERS_AND_MARK,
-      payload: {
-        ...state,
-        selectedAnswers: newSelectedAnswers,
-        actualAnswers: actualAnswers,
-      },
-    });
 
     const markedAnswers: boolean[] = newSelectedAnswers.map(
       (selectedAnswer, answerIndex) =>
@@ -91,6 +83,15 @@ export function Toggle({
       markedAnswers,
       assessmentLibrary
     );
+
+    dispatch({
+      type: stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT,
+      payload: {
+        ...state,
+        selectedAnswers: newSelectedAnswers,
+        answerAssessment: answerAssessment,
+      },
+    });
 
     if (answerAssessment === assessmentLibrary.CORRECT) {
       setSelectedStyle({ left: "unselected", right: "selectedCorrect" });

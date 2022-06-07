@@ -1,10 +1,5 @@
-import {
-  assessmentLibrary,
-  giveAnswerAssessment,
-} from "./giveAnswerAssessment";
-
 export const stateActionsLibrary = {
-  SET_SELECTED_ANSWERS_AND_MARK: "SET_SELECTED_ANSWERS_AND_MARK",
+  SET_SELECTED_ANSWERS_AND_ASSESSMENT: "SET_SELECTED_ANSWERS_AND_ASSESSMENT",
   SET_LOCK: "SET_LOCK",
 };
 
@@ -14,13 +9,9 @@ export interface StateInterface {
   is_locked: boolean;
 }
 
-interface PayloadInterface extends StateInterface {
-  actualAnswers: string[];
-}
-
 export interface StateAction {
   type: string;
-  payload: PayloadInterface;
+  payload: StateInterface;
 }
 
 export function reducer(
@@ -28,26 +19,11 @@ export function reducer(
   action: StateAction
 ): StateInterface {
   switch (action.type) {
-    case stateActionsLibrary.SET_SELECTED_ANSWERS_AND_MARK: {
-      //SET The new selected answers
-      //mark the answer, create an answer assessment
-      //SET that to in state.
-      const newSelectedAnswers = action.payload.selectedAnswers;
-      const questionAnswers = action.payload.actualAnswers;
-      const markedAnswers: boolean[] = newSelectedAnswers.map(
-        (selectedAnswer, answerIndex) =>
-          selectedAnswer === questionAnswers[answerIndex]
-      );
-
-      const answerAssessment = giveAnswerAssessment(
-        markedAnswers,
-        assessmentLibrary
-      );
-
+    case stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT: {
       return {
         ...state,
-        selectedAnswers: newSelectedAnswers,
-        answerAssessment: answerAssessment,
+        selectedAnswers: action.payload.selectedAnswers,
+        answerAssessment: action.payload.answerAssessment,
       };
     }
     case stateActionsLibrary.SET_LOCK: {
