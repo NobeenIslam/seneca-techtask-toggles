@@ -51,7 +51,7 @@ export const questionThree: QuestionInterface = {
 };
 
 const questionFourOptions = [
-  ["Bread, Feet"],
+  ["Bread", "Feet"],
   ["Socks", "Cheese"],
   ["Lettuce", "Philosophy"],
 ];
