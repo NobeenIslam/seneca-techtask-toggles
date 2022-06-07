@@ -1,10 +1,16 @@
 import { useState } from "react";
+import {
+  StateAction,
+  stateActionsLibrary,
+  StateInterface,
+} from "../utils/QuestionStateManager";
 
 interface ToggleProps {
   optionNum: number;
   option: string[];
-  selectedAnswers: string[];
-  setSelectedAnswers: (arg0: string[]) => void;
+  state: StateInterface;
+  dispatch: React.Dispatch<StateAction>;
+  actualAnswers: string[];
 }
 
 interface SelectedStyleInterface {
@@ -15,31 +21,44 @@ interface SelectedStyleInterface {
 export function Toggle({
   optionNum,
   option,
-  selectedAnswers,
-  setSelectedAnswers,
+  state,
+  dispatch,
+  actualAnswers,
 }: ToggleProps): JSX.Element {
   const [selectedStyle, setSelectedStyle] = useState<SelectedStyleInterface>({
     left: "unselected",
     right: "unselected",
   });
 
-  console.log("Selected Answers", selectedAnswers);
-
   const optionOne = option[0];
   const optionTwo = option[1];
 
   function handleClickLeftOption() {
     setSelectedStyle({ left: "selectedIncorrect", right: "unselected" });
-    selectedAnswers[optionNum] = optionOne;
-    const newSelectedAnswers = [...selectedAnswers];
-    setSelectedAnswers(newSelectedAnswers);
+    state.selectedAnswers[optionNum] = optionOne;
+    const newSelectedAnswers = [...state.selectedAnswers];
+    dispatch({
+      type: stateActionsLibrary.SET_SELECTED_ANSWERS_AND_MARK,
+      payload: {
+        ...state,
+        selectedAnswers: newSelectedAnswers,
+        actualAnswers: actualAnswers,
+      },
+    });
   }
 
   function handleClickRightOption() {
     setSelectedStyle({ left: "unselected", right: "selectedIncorrect" });
-    selectedAnswers[optionNum] = optionTwo;
-    const newSelectedAnswers = [...selectedAnswers];
-    setSelectedAnswers(newSelectedAnswers);
+    state.selectedAnswers[optionNum] = optionTwo;
+    const newSelectedAnswers = [...state.selectedAnswers];
+    dispatch({
+      type: stateActionsLibrary.SET_SELECTED_ANSWERS_AND_MARK,
+      payload: {
+        ...state,
+        selectedAnswers: newSelectedAnswers,
+        actualAnswers: actualAnswers,
+      },
+    });
   }
 
   return (
