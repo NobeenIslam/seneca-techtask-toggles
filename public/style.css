@@ -1,14 +1,20 @@
+/* Page sizing and positioning */
+.pageSize {
+  width: 1280px;
+  height: 720px;
+}
+
 /* Question Page CSS */
 
 .backgroundIncorrect {
   background: linear-gradient(180deg, #f1b496 0%, #ea806a 100%);
 }
 
-.backgroundSemiCorrecta {
+.backgroundGettingBetter {
   background: linear-gradient(180deg, #f6b868 0%, #ee6b2d 100%);
 }
 
-.backgroundSemiCorrectb {
+.backgroundAlmostThere {
   background: linear-gradient(180deg, #f4f168 0%, #ee9a2d 100%);
 }
 
@@ -53,7 +59,7 @@
 /* Toggles */
 
 .rectangle {
-  width: 900px;
+  /* width: 1280px;*/
   height: 80px;
   border: 2px solid #f9d29f;
   box-sizing: border-box;
@@ -65,18 +71,15 @@
   background: #f8caa3;
   border-radius: 100px;
   height: 100%;
-  /* height: 80px; */
-
   font-weight: 700;
   font-size: 24px;
-  /* line-height: 160%; */
-  /* padding-top: 20px; */
+  line-height: 160%;
   /* or 38px */
 
   color: #9f938b;
 }
 
-.selectedSemiCorrecta {
+.selectedGettingBetter {
   background: #f2cbbd;
   border-radius: 100px;
 
@@ -88,7 +91,7 @@
   color: #e47958;
 }
 
-.selectedSemiCorrectb {
+.selectedAlmostThere {
   background: #f2cbbd;
   border-radius: 100px;
 
