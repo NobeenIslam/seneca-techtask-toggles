@@ -1,10 +1,12 @@
 export const stateActionsLibrary = {
   SET_SELECTED_ANSWERS_AND_ASSESSMENT: "SET_SELECTED_ANSWERS_AND_ASSESSMENT",
+  SET_TOGGLE_STYLE: "SET_TOGGLE_STYLE",
   SET_LOCK: "SET_LOCK",
 };
 
 export interface StateInterface {
   selectedAnswers: string[];
+  toggleStyle: string;
   answerAssessment: string;
   is_locked: boolean;
 }
@@ -24,6 +26,12 @@ export function reducer(
         ...state,
         selectedAnswers: action.payload.selectedAnswers,
         answerAssessment: action.payload.answerAssessment,
+      };
+    }
+    case stateActionsLibrary.SET_TOGGLE_STYLE: {
+      return {
+        ...state,
+        toggleStyle: action.payload.toggleStyle,
       };
     }
     case stateActionsLibrary.SET_LOCK: {

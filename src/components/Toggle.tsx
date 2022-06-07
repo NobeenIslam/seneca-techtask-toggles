@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   assessmentLibrary,
   giveAnswerAssessment,
@@ -15,11 +15,12 @@ interface ToggleProps {
   state: StateInterface;
   dispatch: React.Dispatch<StateAction>;
   actualAnswers: string[];
+  toggleStyle: string;
 }
 
-interface SelectedStyleInterface {
-  left: string;
-  right: string;
+interface isSelectedInterface {
+  left: boolean;
+  right: boolean;
 }
 
 export function Toggle({
@@ -28,16 +29,18 @@ export function Toggle({
   state,
   dispatch,
   actualAnswers,
+  toggleStyle,
 }: ToggleProps): JSX.Element {
-  const [selectedStyle, setSelectedStyle] = useState<SelectedStyleInterface>({
-    left: "unselected",
-    right: "unselected",
+  const [isSelected, setIsSelected] = useState<isSelectedInterface>({
+    left: false,
+    right: false,
   });
 
   const optionOne = option[0];
   const optionTwo = option[1];
 
   function handleClickLeftOption() {
+    setIsSelected({ left: true, right: false });
     state.selectedAnswers[optionNum] = optionOne;
     const newSelectedAnswers = [...state.selectedAnswers];
 
@@ -60,27 +63,40 @@ export function Toggle({
       },
     });
     if (answerAssessment === assessmentLibrary.CORRECT) {
-      setSelectedStyle({ left: "selectedCorrect", right: "unselected" });
+      dispatch({
+        type: stateActionsLibrary.SET_TOGGLE_STYLE,
+        payload: { ...state, toggleStyle: "selectedCorrect" },
+      });
     } else if (answerAssessment === assessmentLibrary.ALMOST_THERE) {
-      setSelectedStyle({ left: "selectedAlmostThere", right: "unselected" });
+      dispatch({
+        type: stateActionsLibrary.SET_TOGGLE_STYLE,
+        payload: { ...state, toggleStyle: "selectedAlmostThere" },
+      });
     } else if (answerAssessment === assessmentLibrary.GETTING_BETTER) {
-      setSelectedStyle({ left: "selectedGettingBetter", right: "unselected" });
+      dispatch({
+        type: stateActionsLibrary.SET_TOGGLE_STYLE,
+        payload: { ...state, toggleStyle: "selectedGettingBetter" },
+      });
     } else if (answerAssessment === assessmentLibrary.INCORRECT) {
-      setSelectedStyle({ left: "selectedIncorrect", right: "unselected" });
+      dispatch({
+        type: stateActionsLibrary.SET_TOGGLE_STYLE,
+        payload: { ...state, toggleStyle: "selectedAlmostThere" },
+      });
     }
   }
 
   function handleClickRightOption() {
+    setIsSelected({ left: false, right: true });
     state.selectedAnswers[optionNum] = optionTwo;
     const newSelectedAnswers = [...state.selectedAnswers];
 
-    const markedAnswers: boolean[] = newSelectedAnswers.map(
+    const areSelectionsCorrect: boolean[] = newSelectedAnswers.map(
       (selectedAnswer, answerIndex) =>
         selectedAnswer === actualAnswers[answerIndex]
     );
 
     const answerAssessment = giveAnswerAssessment(
-      markedAnswers,
+      areSelectionsCorrect,
       assessmentLibrary
     );
 
@@ -94,27 +110,42 @@ export function Toggle({
     });
 
     if (answerAssessment === assessmentLibrary.CORRECT) {
-      setSelectedStyle({ left: "unselected", right: "selectedCorrect" });
+      dispatch({
+        type: stateActionsLibrary.SET_TOGGLE_STYLE,
+        payload: { ...state, toggleStyle: "selectedCorrect" },
+      });
     } else if (answerAssessment === assessmentLibrary.ALMOST_THERE) {
-      setSelectedStyle({ left: "unselected", right: "selectedAlmostThere" });
+      dispatch({
+        type: stateActionsLibrary.SET_TOGGLE_STYLE,
+        payload: { ...state, toggleStyle: "selectedAlmostThere" },
+      });
     } else if (answerAssessment === assessmentLibrary.GETTING_BETTER) {
-      setSelectedStyle({ left: "unselected", right: "selectedGettingBetter" });
+      dispatch({
+        type: stateActionsLibrary.SET_TOGGLE_STYLE,
+        payload: { ...state, toggleStyle: "selectedGettingBetter" },
+      });
     } else if (answerAssessment === assessmentLibrary.INCORRECT) {
-      setSelectedStyle({ left: "unselected", right: "selectedIncorrect" });
+      dispatch({
+        type: stateActionsLibrary.SET_TOGGLE_STYLE,
+        payload: { ...state, toggleStyle: "selectedAlmostThere" },
+      });
     }
   }
+
+  const leftToggleStyle = isSelected.left ? state.toggleStyle : "unselected";
+  const rightToggleStyle = isSelected.right ? state.toggleStyle : "unselected";
 
   return (
     <section className="d-flex flex-row rectangle mb-2 mx-auto">
       <div
         onClick={handleClickLeftOption}
-        className={`d-flex flex-column w-50 ${selectedStyle.left}`}
+        className={`d-flex flex-column w-50 ${leftToggleStyle}`}
       >
         <p className="m-auto defaultFont">{optionOne}</p>
       </div>
       <div
         onClick={handleClickRightOption}
-        className={`d-flex flex-column w-50 ${selectedStyle.right}`}
+        className={`d-flex flex-column w-50 ${rightToggleStyle}`}
       >
         <p className="m-auto defaultFont">{optionTwo}</p>
       </div>

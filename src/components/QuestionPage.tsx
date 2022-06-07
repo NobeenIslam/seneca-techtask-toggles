@@ -17,6 +17,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     selectedAnswers: new Array(questionOptions.length).fill(""),
     //For flexibility when number of options changes,
     answerAssessment: "",
+    toggleStyle: "unselected",
     is_locked: false,
   };
 
@@ -45,6 +46,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
         state={state}
         dispatch={dispatch}
         actualAnswers={questionAnswers}
+        toggleStyle={state.toggleStyle}
       />
     )
   );
