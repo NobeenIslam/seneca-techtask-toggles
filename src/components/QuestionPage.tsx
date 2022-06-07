@@ -77,6 +77,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     questionIds.push(id);
   }
 
+  //Need to reset the state when going to a new question or things break
   function handleClickNavigationButton(questionId: number) {
     const questionDestination = questions[questionId - 1]; //Q4 accesses 3 part of array
     console.log("We are going to:", questionDestination);

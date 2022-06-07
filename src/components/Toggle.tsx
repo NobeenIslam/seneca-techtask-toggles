@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   assessmentLibrary,
   giveAnswerAssessment,
@@ -36,7 +37,15 @@ export function Toggle({
     third: false,
   });
 
-  console.log("Toggle State", isSelected);
+  //Reset togglestates to not be selected when changing pages
+  const location = useLocation();
+  useEffect(() => {
+    setIsSelected({
+      first: false,
+      second: false,
+      third: false,
+    });
+  }, [location]);
 
   const optionOne = option[0];
   const optionTwo = option[1];
