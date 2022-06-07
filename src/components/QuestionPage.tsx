@@ -13,7 +13,7 @@ interface QuestionProps {
 }
 
 export function QuestionPage({ questions }: QuestionProps): JSX.Element {
-  const thisQuestion = questions[0];
+  const thisQuestion = questions[2];
   const questionOptions = thisQuestion.options;
   const actualAnswers = thisQuestion.answers;
 

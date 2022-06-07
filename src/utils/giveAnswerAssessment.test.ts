@@ -47,7 +47,10 @@ test("Gives right assessment for different answer suggestions for 2 option quest
     assessmentLibrary.CORRECT
   );
   expect(giveAnswerAssessment([false, true], assessmentLibrary)).toStrictEqual(
-    assessmentLibrary.INCORRECT
+    assessmentLibrary.ALMOST_THERE
+  );
+  expect(giveAnswerAssessment([true, false], assessmentLibrary)).toStrictEqual(
+    assessmentLibrary.ALMOST_THERE
   );
   expect(giveAnswerAssessment([false, false], assessmentLibrary)).toStrictEqual(
     assessmentLibrary.INCORRECT
