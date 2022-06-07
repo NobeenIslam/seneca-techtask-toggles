@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { StateAction, StateInterface } from "../utils/QuestionStateManager";
 import { Toggle } from "./Toggle";
 
@@ -8,9 +9,19 @@ interface QuestionProps {
 
 export function QuestionPage({ state, dispatch }: QuestionProps): JSX.Element {
   const questionOptions = state.questions[0].options;
+  const initialAnswers = new Array(questionOptions.length).fill("");
+  const [selectedAnswers, setSelectedAnswers] =
+    useState<string[]>(initialAnswers);
+
   const questionToggles: JSX.Element[] = questionOptions.map(
     (option, index) => (
-      <Toggle key={index} option={option} state={state} dispatch={dispatch} />
+      <Toggle
+        key={index}
+        optionNum={index}
+        option={option}
+        selectedAnswers={selectedAnswers}
+        setSelectedAnswers={setSelectedAnswers}
+      />
     )
   );
 
