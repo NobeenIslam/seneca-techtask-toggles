@@ -20,7 +20,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
   if (questionId === undefined) {
     thisQuestion = questions[0];
   } else {
-    thisQuestion = questions[parseInt(questionId)-1]; //So question 1 appears as Q1 not Q0
+    thisQuestion = questions[parseInt(questionId) - 1]; //So question 1 appears as Q1 not Q0
   }
 
   const questionOptions = thisQuestion.options;
@@ -98,7 +98,15 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
   return (
     <main className={`${backgroundStyle} pageSize`}>
       <div>""</div>
-      <section className="mt-5">
+      <section className="mt-1">
+      <div className="d-flex flex-row justify-content-center">
+          {" "}
+          <Link key={questionId} to="/">
+            <button className="defaultFont btn btn-success btn-lg m-2">
+              <h5>Back to Home</h5>
+            </button>
+          </Link>
+        </div>
         <h1 className="text-center defaultFont questionText mb-5">
           {thisQuestion.question}
         </h1>
