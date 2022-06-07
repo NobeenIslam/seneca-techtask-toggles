@@ -8,7 +8,6 @@ function App(): JSX.Element {
   const questions = dummyQuestions;
 
   const shuffledQuestions = shuffle(questions);
-  console.log(shuffledQuestions);
 
   return (
     <>

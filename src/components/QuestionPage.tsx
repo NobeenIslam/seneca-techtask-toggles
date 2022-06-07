@@ -20,7 +20,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
   if (questionId === undefined) {
     thisQuestion = questions[0];
   } else {
-    thisQuestion = questions[parseInt(questionId)];
+    thisQuestion = questions[parseInt(questionId)-1]; //So question 1 appears as Q1 not Q0
   }
 
   const questionOptions = thisQuestion.options;
@@ -71,14 +71,14 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
   );
 
   const questionIds: number[] = [];
-  for (let id = 0; id < questions.length; id++) {
+  for (let id = 1; id <= questions.length; id++) {
     questionIds.push(id);
   }
 
   const questionNavigationButtons: JSX.Element[] = questionIds.map(
     (questionId) => (
       <Link key={questionId} to={`/${questionId}`}>
-        <button className="defaultFont btn btn-success btn-lg mx-2">
+        <button className="defaultFont btn btn-success btn-lg m-2">
           <h5>Q{questionId}</h5>
         </button>
       </Link>
