@@ -13,18 +13,22 @@ export const assessmentLibrary: AssementLevelsInterface = {
 };
 
 export function giveAnswerAssessment(
-  markedAnswers: boolean[],
+  areSelectionsCorrect: boolean[],
   assessmentLibrary: AssementLevelsInterface
 ): string {
   let countCorrect = 0;
   let countIncorrect = 0;
-  for (const mark of markedAnswers) {
-    mark
+  for (const isSelectionCorrect of areSelectionsCorrect) {
+    isSelectionCorrect
       ? (countCorrect = countCorrect + 1)
       : (countIncorrect = countIncorrect + 1);
   }
 
-  if (countCorrect === markedAnswers.length) {
+  if (areSelectionsCorrect.length === 2 && countCorrect === 1) {
+    return assessmentLibrary.ALMOST_THERE;
+  }
+
+  if (countCorrect === areSelectionsCorrect.length) {
     return assessmentLibrary.CORRECT;
   } else if (countCorrect === 0 || countCorrect === 1) {
     return assessmentLibrary.INCORRECT;
