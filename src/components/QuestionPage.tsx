@@ -1,4 +1,5 @@
 import { useEffect, useReducer } from "react";
+import { isDoStatement } from "typescript";
 import { assessmentLibrary } from "../utils/giveAnswerAssessment";
 import { QuestionInterface } from "../utils/Interfaces";
 import {
@@ -62,6 +63,15 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     )
   );
 
+  let message = "";
+  if (state.answerAssessment === "") {
+    message = "Please select your answers";
+  } else {
+    state.answerAssessment === assessmentLibrary.CORRECT
+      ? (message = "The answer is correct")
+      : (message = "The answer is incorrect");
+  }
+
   return (
     <main className={`${backgroundStyle} pageSize`}>
       <div>""</div>
@@ -70,11 +80,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
           {thisQuestion.question}
         </h1>
         <section className="container mx-auto mb-5">{questionToggles}</section>
-        <h2 className="text-center defaultFont resultText">
-          {state.answerAssessment === assessmentLibrary.CORRECT
-            ? "The answer is correct"
-            : "The answer is incorrect"}
-        </h2>
+        <h2 className="text-center defaultFont resultText">{message}</h2>
       </section>
     </main>
   );
