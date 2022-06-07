@@ -36,7 +36,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log("Global State", state);
+  //console.log("Global State", state);
 
   useEffect(() => {
     if (state.answerAssessment === assessmentLibrary.CORRECT) {
