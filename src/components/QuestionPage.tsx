@@ -1,18 +1,23 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import {
   assessmentLibrary,
   giveAnswerAssessment,
 } from "../utils/giveAnswerAssessment";
-import { StateAction, StateInterface } from "../utils/QuestionStateManager";
+import { QuestionInterface } from "../utils/Interfaces";
+import {
+  reducer,
+  initialState,
+} from "../utils/QuestionStateManager";
 import { Toggle } from "./Toggle";
 
 interface QuestionProps {
-  state: StateInterface;
-  dispatch: React.Dispatch<StateAction>;
+  questions: QuestionInterface[];
 }
 
-export function QuestionPage({ state, dispatch }: QuestionProps): JSX.Element {
-  const thisQuestion = state.questions[0];
+export function QuestionPage({ questions }: QuestionProps): JSX.Element {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const thisQuestion = questions[3];
   const questionOptions = thisQuestion.options;
   const questionAnswers = thisQuestion.answers;
 
