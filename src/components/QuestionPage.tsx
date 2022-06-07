@@ -15,7 +15,7 @@ interface QuestionProps {
 export function QuestionPage({ questions }: QuestionProps): JSX.Element {
   const thisQuestion = questions[0];
   const questionOptions = thisQuestion.options;
-  const questionAnswers = thisQuestion.answers;
+  const actualAnswers = thisQuestion.answers;
 
   const initialState: StateInterface = {
     selectedAnswers: new Array(questionOptions.length).fill(""),
@@ -57,8 +57,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
         option={option}
         state={state}
         dispatch={dispatch}
-        actualAnswers={questionAnswers}
-        toggleStyle={state.toggleStyle}
+        actualAnswers={actualAnswers}
       />
     )
   );

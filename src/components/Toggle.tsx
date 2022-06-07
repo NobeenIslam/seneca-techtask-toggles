@@ -15,7 +15,6 @@ interface ToggleProps {
   state: StateInterface;
   dispatch: React.Dispatch<StateAction>;
   actualAnswers: string[];
-  toggleStyle: string;
 }
 
 interface isSelectedInterface {
@@ -29,7 +28,6 @@ export function Toggle({
   state,
   dispatch,
   actualAnswers,
-  toggleStyle,
 }: ToggleProps): JSX.Element {
   const [isSelected, setIsSelected] = useState<isSelectedInterface>({
     left: false,
