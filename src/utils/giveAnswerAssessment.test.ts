@@ -1,4 +1,4 @@
-import { giveAnswerAssessment } from "./answerAssessments";
+import { giveAnswerAssessment } from "./giveAnswerAssessments";
 
 test("Gives right assessment for different answer suggestions for 4 option questions", () => {
   expect(giveAnswerAssessment([true, true, true, true])).toStrictEqual(
