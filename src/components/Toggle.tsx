@@ -41,8 +41,12 @@ export function Toggle({
 
   function handleClickToggle(
     selectedToggle: isSelectedInterface,
-    selectedOption: string
+    selectedOption: string,
+    isLocked: boolean
   ) {
+    if (isLocked) {
+      return;
+    }
     setIsSelected(selectedToggle);
     state.selectedAnswers[toggleNum] = selectedOption;
     const newSelectedAnswers = [...state.selectedAnswers];
@@ -95,7 +99,11 @@ export function Toggle({
     <section className="d-flex flex-row rectangle mb-2 mx-auto">
       <div
         onClick={() =>
-          handleClickToggle({ left: true, right: false }, optionOne)
+          handleClickToggle(
+            { left: true, right: false },
+            optionOne,
+            state.isLocked
+          )
         }
         className={`d-flex flex-column w-50 ${leftToggleStyle}`}
       >
@@ -103,7 +111,11 @@ export function Toggle({
       </div>
       <div
         onClick={() =>
-          handleClickToggle({ left: false, right: true }, optionTwo)
+          handleClickToggle(
+            { left: false, right: true },
+            optionTwo,
+            state.isLocked
+          )
         }
         className={`d-flex flex-column w-50 ${rightToggleStyle}`}
       >

@@ -8,7 +8,7 @@ export interface StateInterface {
   selectedAnswers: string[];
   toggleStyle: string;
   answerAssessment: string;
-  is_locked: boolean;
+  isLocked: boolean;
 }
 
 export interface StateAction {
@@ -35,7 +35,7 @@ export function reducer(
       };
     }
     case stateActionsLibrary.SET_LOCK: {
-      return { ...state, is_locked: true };
+      return { ...state, isLocked: true };
     }
     default: {
       return state;
