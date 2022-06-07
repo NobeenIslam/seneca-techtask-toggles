@@ -2,7 +2,7 @@ import { QuestionInterface } from "./Interfaces";
 
 const questionOneOptions = [
   ["Cell Wall", "Ribosomes"],
-  ["Cytoplasms", "Chloroplast"],
+  ["Cytoplasm", "Chloroplast"],
   ["Partially permeable membrane", "Impermeable membrane"],
   ["Cellulose", "Mitochondria"],
 ];
@@ -13,9 +13,9 @@ export const questionOne: QuestionInterface = {
   options: questionOneOptions,
   answers: [
     questionOneOptions[0][1],
-    questionOneOptions[1][1],
-    questionOneOptions[2][1],
-    questionOneOptions[3][0],
+    questionOneOptions[1][0],
+    questionOneOptions[2][0],
+    questionOneOptions[3][1],
   ],
 };
 
