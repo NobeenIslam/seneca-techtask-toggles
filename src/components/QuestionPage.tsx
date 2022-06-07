@@ -1,7 +1,11 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { assessmentLibrary } from "../utils/giveAnswerAssessment";
 import { QuestionInterface } from "../utils/Interfaces";
-import { reducer, StateInterface } from "../utils/QuestionStateManager";
+import {
+  reducer,
+  stateActionsLibrary,
+  StateInterface,
+} from "../utils/QuestionStateManager";
 import { Toggle } from "./Toggle";
 
 interface QuestionProps {
@@ -11,17 +15,25 @@ interface QuestionProps {
 export function QuestionPage({ questions }: QuestionProps): JSX.Element {
   const thisQuestion = questions[0];
   const questionOptions = thisQuestion.options;
-  const questionAnswers = thisQuestion.answers;
+  const actualAnswers = thisQuestion.answers;
 
   const initialState: StateInterface = {
     selectedAnswers: new Array(questionOptions.length).fill(""),
     //For flexibility when number of options changes,
     answerAssessment: "",
     toggleStyle: "unselected",
-    is_locked: false,
+    isLocked: false,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    if (state.answerAssessment === assessmentLibrary.CORRECT) {
+      dispatch({ type: stateActionsLibrary.SET_LOCK, payload: { ...state } });
+    }
+    //Requesint to put state in dependancy array which triggers infinite loop.
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.answerAssessment]);
 
   console.log(state);
 
@@ -45,8 +57,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
         option={option}
         state={state}
         dispatch={dispatch}
-        actualAnswers={questionAnswers}
-        toggleStyle={state.toggleStyle}
+        actualAnswers={actualAnswers}
       />
     )
   );
