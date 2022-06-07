@@ -1,4 +1,21 @@
-export function giveAnswerAssessment(markedAnswers: boolean[]): string {
+interface AssementLevelsInterface {
+  CORRECT: "correct";
+  ALMOST_THERE: "almost-there";
+  GETTING_BETTER: "getting-better";
+  INCORRECT: "incorrect";
+}
+
+export const assessmentLibrary: AssementLevelsInterface = {
+  CORRECT: "correct",
+  ALMOST_THERE: "almost-there",
+  GETTING_BETTER: "getting-better",
+  INCORRECT: "incorrect",
+};
+
+export function giveAnswerAssessment(
+  markedAnswers: boolean[],
+  assessmentLibrary: AssementLevelsInterface
+): string {
   let countCorrect = 0;
   let countIncorrect = 0;
   for (const mark of markedAnswers) {
@@ -6,22 +23,15 @@ export function giveAnswerAssessment(markedAnswers: boolean[]): string {
       ? (countCorrect = countCorrect + 1)
       : (countIncorrect = countIncorrect + 1);
   }
-  console.log(
-    "Marked Answers",
-    markedAnswers,
-    "Correct:",
-    countCorrect,
-    "Incorrect",
-    countIncorrect
-  );
+
   if (countCorrect === markedAnswers.length) {
-    return "correct";
+    return assessmentLibrary.CORRECT;
   } else if (countCorrect === 0 || countCorrect === 1) {
-    return "incorrect";
+    return assessmentLibrary.INCORRECT;
   } else if (countIncorrect === 1) {
-    return "almost-there";
+    return assessmentLibrary.ALMOST_THERE;
   } else if (countCorrect === countIncorrect || countCorrect < countIncorrect) {
-    return "getting-better";
+    return assessmentLibrary.GETTING_BETTER;
   }
 
   return "something has gone wrong";
