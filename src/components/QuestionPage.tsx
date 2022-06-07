@@ -41,7 +41,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     (option, index) => (
       <Toggle
         key={index}
-        optionNum={index}
+        toggleNum={index}
         option={option}
         state={state}
         dispatch={dispatch}

@@ -10,7 +10,7 @@ import {
 } from "../utils/QuestionStateManager";
 
 interface ToggleProps {
-  optionNum: number;
+  toggleNum: number;
   option: string[];
   state: StateInterface;
   dispatch: React.Dispatch<StateAction>;
@@ -24,7 +24,7 @@ interface isSelectedInterface {
 }
 
 export function Toggle({
-  optionNum,
+  toggleNum,
   option,
   state,
   dispatch,
@@ -40,12 +40,11 @@ export function Toggle({
   const optionTwo = option[1];
 
   function handleClickToggle(
-    toggleSelection: isSelectedInterface,
-    optionSelection: string
+    selectedToggle: isSelectedInterface,
+    selectedOption: string
   ) {
-    console.log("toggle clicked");
-    setIsSelected(toggleSelection);
-    state.selectedAnswers[optionNum] = optionSelection;
+    setIsSelected(selectedToggle);
+    state.selectedAnswers[toggleNum] = selectedOption;
     const newSelectedAnswers = [...state.selectedAnswers];
 
     const areSelectionsCorrect: boolean[] = newSelectedAnswers.map(
