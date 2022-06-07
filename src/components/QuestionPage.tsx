@@ -40,12 +40,13 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     if (state.answerAssessment === assessmentLibrary.CORRECT) {
       dispatch({ type: stateActionsLibrary.SET_LOCK, payload: { ...state } });
     }
-    //Requesint to put state in dependancy array which triggers infinite loop.
+    //Requesting to put state in dependancy array which triggers infinite loop.
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.answerAssessment]);
 
   let backgroundStyle = "backgroundIncorrect";
 
+  //Conditionals to change background based on selection
   if (state.answerAssessment === assessmentLibrary.CORRECT) {
     backgroundStyle = "backgroundCorrect";
   } else if (state.answerAssessment === assessmentLibrary.ALMOST_THERE) {
@@ -69,6 +70,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     )
   );
 
+  //For the answer message which says incorrect / correct at the bottom of a page
   let message = "";
   if (state.answerAssessment === "") {
     message = "Please select your answers";
