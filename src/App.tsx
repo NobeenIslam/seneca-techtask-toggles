@@ -9,7 +9,7 @@ function App(): JSX.Element {
   return (
     <>
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/" element={<HomePage questions={questions} />}></Route>
         <Route
           path="/:questionId"
           element={<QuestionPage questions={questions} />}

@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { isDoStatement } from "typescript";
+import { useParams } from "react-router-dom";
 import { assessmentLibrary } from "../utils/giveAnswerAssessment";
 import { QuestionInterface } from "../utils/Interfaces";
 import {
@@ -14,7 +14,15 @@ interface QuestionProps {
 }
 
 export function QuestionPage({ questions }: QuestionProps): JSX.Element {
-  const thisQuestion = questions[2];
+  const { questionId } = useParams();
+
+  let thisQuestion: QuestionInterface | [] = [];
+  if (questionId === undefined) {
+    thisQuestion = questions[0];
+  } else {
+    thisQuestion = questions[parseInt(questionId)];
+  }
+
   const questionOptions = thisQuestion.options;
   const actualAnswers = thisQuestion.answers;
 
@@ -35,8 +43,6 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     //Requesint to put state in dependancy array which triggers infinite loop.
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.answerAssessment]);
-
-  console.log(state);
 
   let backgroundStyle = "backgroundIncorrect";
 
