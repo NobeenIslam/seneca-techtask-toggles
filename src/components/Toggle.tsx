@@ -36,6 +36,8 @@ export function Toggle({
     third: false,
   });
 
+  console.log("Toggle State", isSelected);
+
   const optionOne = option[0];
   const optionTwo = option[1];
   const optionThree: string | undefined = option[2];

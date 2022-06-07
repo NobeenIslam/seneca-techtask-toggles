@@ -36,6 +36,8 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  console.log("Global State", state);
+
   useEffect(() => {
     if (state.answerAssessment === assessmentLibrary.CORRECT) {
       dispatch({ type: stateActionsLibrary.SET_LOCK, payload: { ...state } });
@@ -75,10 +77,30 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     questionIds.push(id);
   }
 
+  function handleClickNavigationButton(questionId: number) {
+    const questionDestination = questions[questionId - 1]; //Q4 accesses 3 part of array
+    console.log("We are going to:", questionDestination);
+    const initialEmptyOptions = new Array(
+      questionDestination.options.length
+    ).fill("");
+    dispatch({
+      type: stateActionsLibrary.RESET,
+      payload: {
+        selectedAnswers: initialEmptyOptions,
+        answerAssessment: "",
+        toggleStyle: "unselected",
+        isLocked: false,
+      },
+    });
+  }
+
   const questionNavigationButtons: JSX.Element[] = questionIds.map(
     (questionId) => (
       <Link key={questionId} to={`/${questionId}`}>
-        <button className="defaultFont btn btn-success btn-lg m-2">
+        <button
+          onClick={() => handleClickNavigationButton(questionId)}
+          className="defaultFont btn btn-success btn-lg m-2"
+        >
           <h5>Q{questionId}</h5>
         </button>
       </Link>

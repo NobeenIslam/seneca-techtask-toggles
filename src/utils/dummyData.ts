@@ -57,7 +57,7 @@ const questionFourOptions = [
 ];
 
 export const questionFour: QuestionInterface = {
-  questionId: 43,
+  questionId: 4,
   question: "What is in a sandwich",
   options: questionFourOptions,
   answers: [

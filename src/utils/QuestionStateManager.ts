@@ -2,6 +2,7 @@ export const stateActionsLibrary = {
   SET_SELECTED_ANSWERS_AND_ASSESSMENT: "SET_SELECTED_ANSWERS_AND_ASSESSMENT",
   SET_TOGGLE_STYLE: "SET_TOGGLE_STYLE",
   SET_LOCK: "SET_LOCK",
+  RESET: "RESET",
 };
 
 export interface StateInterface {
@@ -36,6 +37,10 @@ export function reducer(
     }
     case stateActionsLibrary.SET_LOCK: {
       return { ...state, isLocked: true };
+    }
+    case stateActionsLibrary.RESET: {
+      //Spreading state to keep the selectedAnswers array
+      return { ...action.payload };
     }
     default: {
       return state;
