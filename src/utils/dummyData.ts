@@ -50,8 +50,26 @@ export const questionThree: QuestionInterface = {
   answers: [questionThreeOptions[0][0], questionThreeOptions[1][1]],
 };
 
+const questionFourOptions = [
+  ["Bread, Feet"],
+  ["Socks", "Cheese"],
+  ["Lettuce", "Philosophy"],
+];
+
+export const questionFour: QuestionInterface = {
+  questionId: 43,
+  question: "What is in a sandwich",
+  options: questionFourOptions,
+  answers: [
+    questionFourOptions[0][0],
+    questionFourOptions[1][1],
+    questionFourOptions[2][0],
+  ],
+};
+
 export const dummyQuestions: QuestionInterface[] = [
   questionOne,
   questionTwo,
   questionThree,
+  questionFour,
 ];
