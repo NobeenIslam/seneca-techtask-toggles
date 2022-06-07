@@ -5,8 +5,6 @@ import { initialState, reducer } from "./utils/QuestionStateManager";
 function App(): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log(state);
-
   return (
     <>
       <QuestionPage state={state} dispatch={dispatch} />

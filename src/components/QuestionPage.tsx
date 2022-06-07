@@ -9,9 +9,24 @@ interface QuestionProps {
 
 export function QuestionPage({ state, dispatch }: QuestionProps): JSX.Element {
   const questionOptions = state.questions[0].options;
-  const initialAnswers = new Array(questionOptions.length).fill("");
-  const [selectedAnswers, setSelectedAnswers] =
-    useState<string[]>(initialAnswers);
+  const questionAnswers = state.questions[0].answers;
+
+  const initialSelectedAnswers = new Array(questionOptions.length).fill(""); //For flexibility when number of options changes
+  const [selectedAnswers, setSelectedAnswers] = useState<string[]>(
+    initialSelectedAnswers
+  );
+
+  const [backgroundStyle, setBackgroundStyle] = useState<string>(
+    "backgroundIncorrect"
+  );
+
+  const answerAssessment = selectedAnswers.map(
+    (selectedAnswer, answerIndex) =>
+      selectedAnswer === questionAnswers[answerIndex]
+  );
+  console.log({ a: selectedAnswers[2], b: questionAnswers[2] });
+  console.log(selectedAnswers[2] === questionAnswers[2]);
+  console.log({ actualAnswers: questionAnswers, assessment: answerAssessment });
 
   const questionToggles: JSX.Element[] = questionOptions.map(
     (option, index) => (
