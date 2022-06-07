@@ -66,7 +66,9 @@ export function QuestionPage({ state, dispatch }: QuestionProps): JSX.Element {
         </h1>
         <section className="container mx-auto mb-5">{questionToggles}</section>
         <h2 className="text-center defaultFont resultText">
-          The answer is incorrect
+          {answerAssessment === assessmentLibrary.CORRECT
+            ? "The answer is correct"
+            : "The answer is incorrect"}
         </h2>
       </section>
     </main>
