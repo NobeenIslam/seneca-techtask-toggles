@@ -48,6 +48,7 @@ export function Toggle({
     if (isLocked) {
       return;
     }
+    //Toggle style on, update selected answers and check whether they are correct or not
     setIsSelected(selectedToggle);
     state.selectedAnswers[toggleNum] = selectedOption;
     const newSelectedAnswers = [...state.selectedAnswers];
@@ -70,6 +71,7 @@ export function Toggle({
         answerAssessment: answerAssessment,
       },
     });
+    //Conditionals to set toggle styles based on how correct answer is
     if (answerAssessment === assessmentLibrary.CORRECT) {
       dispatch({
         type: stateActionsLibrary.SET_TOGGLE_STYLE,
@@ -93,6 +95,7 @@ export function Toggle({
     }
   }
 
+  //Style toggle if it's selected
   const firstToggleStyle = isSelected.first ? state.toggleStyle : "unselected";
   const secondToggleStyle = isSelected.second
     ? state.toggleStyle
