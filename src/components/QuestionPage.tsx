@@ -22,7 +22,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log(state)
+  console.log(state);
 
   let backgroundStyle = "backgroundIncorrect";
 

@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  assessmentLibrary,
+  giveAnswerAssessment,
+} from "../utils/giveAnswerAssessment";
 import {
   StateAction,
   stateActionsLibrary,
@@ -34,9 +38,19 @@ export function Toggle({
   const optionTwo = option[1];
 
   function handleClickLeftOption() {
-    setSelectedStyle({ left: "selectedIncorrect", right: "unselected" });
     state.selectedAnswers[optionNum] = optionOne;
     const newSelectedAnswers = [...state.selectedAnswers];
+
+    const markedAnswers: boolean[] = newSelectedAnswers.map(
+      (selectedAnswer, answerIndex) =>
+        selectedAnswer === actualAnswers[answerIndex]
+    );
+
+    const answerAssessment = giveAnswerAssessment(
+      markedAnswers,
+      assessmentLibrary
+    );
+
     dispatch({
       type: stateActionsLibrary.SET_SELECTED_ANSWERS_AND_MARK,
       payload: {
@@ -45,10 +59,18 @@ export function Toggle({
         actualAnswers: actualAnswers,
       },
     });
+    if (answerAssessment === assessmentLibrary.CORRECT) {
+      setSelectedStyle({ left: "selectedCorrect", right: "unselected" });
+    } else if (answerAssessment === assessmentLibrary.ALMOST_THERE) {
+      setSelectedStyle({ left: "selectedAlmostThere", right: "unselected" });
+    } else if (answerAssessment === assessmentLibrary.GETTING_BETTER) {
+      setSelectedStyle({ left: "selectedGettingBetter", right: "unselected" });
+    } else if (answerAssessment === assessmentLibrary.INCORRECT) {
+      setSelectedStyle({ left: "selectedIncorrect", right: "unselected" });
+    }
   }
 
   function handleClickRightOption() {
-    setSelectedStyle({ left: "unselected", right: "selectedIncorrect" });
     state.selectedAnswers[optionNum] = optionTwo;
     const newSelectedAnswers = [...state.selectedAnswers];
     dispatch({
@@ -59,6 +81,26 @@ export function Toggle({
         actualAnswers: actualAnswers,
       },
     });
+
+    const markedAnswers: boolean[] = newSelectedAnswers.map(
+      (selectedAnswer, answerIndex) =>
+        selectedAnswer === actualAnswers[answerIndex]
+    );
+
+    const answerAssessment = giveAnswerAssessment(
+      markedAnswers,
+      assessmentLibrary
+    );
+
+    if (answerAssessment === assessmentLibrary.CORRECT) {
+      setSelectedStyle({ left: "unselected", right: "selectedCorrect" });
+    } else if (answerAssessment === assessmentLibrary.ALMOST_THERE) {
+      setSelectedStyle({ left: "unselected", right: "selectedAlmostThere" });
+    } else if (answerAssessment === assessmentLibrary.GETTING_BETTER) {
+      setSelectedStyle({ left: "unselected", right: "selectedGettingBetter" });
+    } else if (answerAssessment === assessmentLibrary.INCORRECT) {
+      setSelectedStyle({ left: "unselected", right: "selectedIncorrect" });
+    }
   }
 
   return (
