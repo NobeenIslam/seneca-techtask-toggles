@@ -18,8 +18,9 @@ interface ToggleProps {
 }
 
 interface isSelectedInterface {
-  left: boolean;
-  right: boolean;
+  first: boolean;
+  second: boolean;
+  third: boolean;
 }
 
 export function Toggle({
@@ -30,12 +31,14 @@ export function Toggle({
   actualAnswers,
 }: ToggleProps): JSX.Element {
   const [isSelected, setIsSelected] = useState<isSelectedInterface>({
-    left: false,
-    right: false,
+    first: false,
+    second: false,
+    third: false,
   });
 
   const optionOne = option[0];
   const optionTwo = option[1];
+  const optionThree: string | undefined = option[2];
 
   function handleClickToggle(
     selectedToggle: isSelectedInterface,
@@ -90,35 +93,52 @@ export function Toggle({
     }
   }
 
-  const leftToggleStyle = isSelected.left ? state.toggleStyle : "unselected";
-  const rightToggleStyle = isSelected.right ? state.toggleStyle : "unselected";
+  const firstToggleStyle = isSelected.first ? state.toggleStyle : "unselected";
+  const secondToggleStyle = isSelected.second
+    ? state.toggleStyle
+    : "unselected";
+  const thirdToggleStyle = isSelected.third ? state.toggleStyle : "unselected";
 
   return (
     <section className="d-flex flex-row rectangle mb-2 mx-auto">
       <div
         onClick={() =>
           handleClickToggle(
-            { left: true, right: false },
+            { first: true, second: false, third: false },
             optionOne,
             state.isLocked
           )
         }
-        className={`d-flex flex-column w-50 ${leftToggleStyle}`}
+        className={`d-flex flex-column w-50 ${firstToggleStyle}`}
       >
         <p className="m-auto defaultFont">{optionOne}</p>
       </div>
       <div
         onClick={() =>
           handleClickToggle(
-            { left: false, right: true },
+            { first: false, second: true, third: false },
             optionTwo,
             state.isLocked
           )
         }
-        className={`d-flex flex-column w-50 ${rightToggleStyle}`}
+        className={`d-flex flex-column w-50 ${secondToggleStyle}`}
       >
         <p className="m-auto defaultFont">{optionTwo}</p>
       </div>
+      {optionThree && (
+        <div
+          onClick={() =>
+            handleClickToggle(
+              { first: false, second: false, third: true },
+              optionThree,
+              state.isLocked
+            )
+          }
+          className={`d-flex flex-column w-50 ${thirdToggleStyle}`}
+        >
+          <p className="m-auto defaultFont">{optionThree}</p>
+        </div>
+      )}
     </section>
   );
 }
