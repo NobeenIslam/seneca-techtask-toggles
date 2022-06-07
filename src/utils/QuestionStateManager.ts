@@ -1,23 +1,15 @@
-import { dummyQuestions } from "./dummyData";
-import { QuestionInterface } from "./Interfaces";
-
 export const stateActionsLibrary = {
-  SET_QUESTIONS: "SET_QUESTIONS",
-  SET_ANSWERS: "SET_ANSWERS",
+  SET_SELECTED_ANSWERS_AND_ASSESSMENT: "SET_SELECTED_ANSWERS_AND_ASSESSMENT",
+  SET_TOGGLE_STYLE: "SET_TOGGLE_STYLE",
   SET_LOCK: "SET_LOCK",
 };
 
 export interface StateInterface {
-  questions: QuestionInterface[];
-  answers: string[];
+  selectedAnswers: string[];
+  toggleStyle: string;
+  answerAssessment: string;
   is_locked: boolean;
 }
-
-export const initialState: StateInterface = {
-  questions: dummyQuestions,
-  answers: [],
-  is_locked: false,
-};
 
 export interface StateAction {
   type: string;
@@ -29,11 +21,18 @@ export function reducer(
   action: StateAction
 ): StateInterface {
   switch (action.type) {
-    case stateActionsLibrary.SET_QUESTIONS: {
-      return { ...state, questions: action.payload.questions };
+    case stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT: {
+      return {
+        ...state,
+        selectedAnswers: action.payload.selectedAnswers,
+        answerAssessment: action.payload.answerAssessment,
+      };
     }
-    case stateActionsLibrary.SET_ANSWERS: {
-      return { ...state, answers: action.payload.answers };
+    case stateActionsLibrary.SET_TOGGLE_STYLE: {
+      return {
+        ...state,
+        toggleStyle: action.payload.toggleStyle,
+      };
     }
     case stateActionsLibrary.SET_LOCK: {
       return { ...state, is_locked: true };

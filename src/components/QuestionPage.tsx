@@ -1,58 +1,52 @@
-import { useState } from "react";
-import {
-  assessmentLibrary,
-  giveAnswerAssessment,
-} from "../utils/giveAnswerAssessment";
-import { StateAction, StateInterface } from "../utils/QuestionStateManager";
+import { useReducer } from "react";
+import { assessmentLibrary } from "../utils/giveAnswerAssessment";
+import { QuestionInterface } from "../utils/Interfaces";
+import { reducer, StateInterface } from "../utils/QuestionStateManager";
 import { Toggle } from "./Toggle";
 
 interface QuestionProps {
-  state: StateInterface;
-  dispatch: React.Dispatch<StateAction>;
+  questions: QuestionInterface[];
 }
 
-export function QuestionPage({ state, dispatch }: QuestionProps): JSX.Element {
-  const thisQuestion = state.questions[0];
+export function QuestionPage({ questions }: QuestionProps): JSX.Element {
+  const thisQuestion = questions[0];
   const questionOptions = thisQuestion.options;
   const questionAnswers = thisQuestion.answers;
 
-  const initialSelectedAnswers = new Array(questionOptions.length).fill(""); //For flexibility when number of options changes
-  const [selectedAnswers, setSelectedAnswers] = useState<string[]>(
-    initialSelectedAnswers
-  );
+  const initialState: StateInterface = {
+    selectedAnswers: new Array(questionOptions.length).fill(""),
+    //For flexibility when number of options changes,
+    answerAssessment: "",
+    toggleStyle: "unselected",
+    is_locked: false,
+  };
 
-  const markedAnswers: boolean[] = selectedAnswers.map(
-    (selectedAnswer, answerIndex) =>
-      selectedAnswer === questionAnswers[answerIndex]
-  );
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const answerAssessment = giveAnswerAssessment(
-    markedAnswers,
-    assessmentLibrary
-  );
+  console.log(state);
 
   let backgroundStyle = "backgroundIncorrect";
 
-  if (answerAssessment === assessmentLibrary.CORRECT) {
+  if (state.answerAssessment === assessmentLibrary.CORRECT) {
     backgroundStyle = "backgroundCorrect";
-  } else if (answerAssessment === assessmentLibrary.ALMOST_THERE) {
+  } else if (state.answerAssessment === assessmentLibrary.ALMOST_THERE) {
     backgroundStyle = "backgroundAlmostThere";
-  } else if (answerAssessment === assessmentLibrary.GETTING_BETTER) {
+  } else if (state.answerAssessment === assessmentLibrary.GETTING_BETTER) {
     backgroundStyle = "backgroundGettingBetter";
-  } else if (answerAssessment === assessmentLibrary.INCORRECT) {
+  } else if (state.answerAssessment === assessmentLibrary.INCORRECT) {
     backgroundStyle = "backgroundIncorrect";
   }
-
-  console.log({ actualAnswers: questionAnswers, assessment: markedAnswers });
 
   const questionToggles: JSX.Element[] = questionOptions.map(
     (option, index) => (
       <Toggle
         key={index}
-        optionNum={index}
+        toggleNum={index}
         option={option}
-        selectedAnswers={selectedAnswers}
-        setSelectedAnswers={setSelectedAnswers}
+        state={state}
+        dispatch={dispatch}
+        actualAnswers={questionAnswers}
+        toggleStyle={state.toggleStyle}
       />
     )
   );
@@ -66,7 +60,9 @@ export function QuestionPage({ state, dispatch }: QuestionProps): JSX.Element {
         </h1>
         <section className="container mx-auto mb-5">{questionToggles}</section>
         <h2 className="text-center defaultFont resultText">
-          The answer is incorrect
+          {state.answerAssessment === assessmentLibrary.CORRECT
+            ? "The answer is correct"
+            : "The answer is incorrect"}
         </h2>
       </section>
     </main>

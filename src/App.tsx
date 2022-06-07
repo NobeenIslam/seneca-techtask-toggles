@@ -1,13 +1,12 @@
-import { useReducer } from "react";
 import { QuestionPage } from "./components/QuestionPage";
-import { initialState, reducer } from "./utils/QuestionStateManager";
+import { dummyQuestions } from "./utils/dummyData";
 
 function App(): JSX.Element {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const questions = dummyQuestions;
 
   return (
     <>
-      <QuestionPage state={state} dispatch={dispatch} />
+      <QuestionPage questions={questions} />
     </>
   );
 }
