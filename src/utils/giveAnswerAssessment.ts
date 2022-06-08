@@ -1,4 +1,4 @@
-interface AssementLevelsInterface {
+export interface AssementLevelsInterface {
   CORRECT: "correct";
   ALMOST_THERE: "almost-there";
   GETTING_BETTER: "getting-better";

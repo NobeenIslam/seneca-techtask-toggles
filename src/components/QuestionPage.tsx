@@ -1,5 +1,6 @@
 import { useEffect, useReducer } from "react";
 import { Link, useParams } from "react-router-dom";
+import { createMessage } from "../utils/createMessage";
 import { assessmentLibrary } from "../utils/giveAnswerAssessment";
 import { QuestionInterface } from "../utils/Interfaces";
 import {
@@ -39,6 +40,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
 
   //console.log("Global State", state);
 
+  //Everytime the assessment changes check if you need to lock the answer
   useEffect(() => {
     if (state.answerAssessment === assessmentLibrary.CORRECT) {
       dispatch({ type: stateActionsLibrary.SET_LOCK, payload: { ...state } });
@@ -74,14 +76,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
   );
 
   //For the answer message which says incorrect / correct at the bottom of a page
-  let message = "";
-  if (state.answerAssessment === "") {
-    message = "Please select your answers";
-  } else {
-    state.answerAssessment === assessmentLibrary.CORRECT
-      ? (message = "The answer is correct")
-      : (message = "The answer is incorrect");
-  }
+  const message = createMessage(state.answerAssessment, assessmentLibrary);
 
   return (
     <main className={`${backgroundStyle} pageSize`}>
