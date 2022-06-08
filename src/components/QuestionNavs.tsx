@@ -19,7 +19,7 @@ export function QuestionNavs({
     questionIds.push(id);
   }
 
-  //Need to reset the state when going to a new question or things break
+  //Need to reset the state when going to a new question through the link, as the state doesn't reset from initial like it does when clicking "Begin Learning"
   function handleClickNavigationButton(questionId: number) {
     const questionDestination = questions[questionId - 1]; //Q4 accesses index 3 of array
     const initialEmptyOptions = new Array(
