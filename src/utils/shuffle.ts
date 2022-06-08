@@ -3,7 +3,8 @@ import { QuestionInterface } from "./Interfaces";
 export function shuffleQuestions(
   array: QuestionInterface[]
 ): QuestionInterface[] {
-  let currentIndex = array.length,
+  const arrayCopy = [...array];
+  let currentIndex = arrayCopy.length,
     randomIndex;
 
   // While there remain elements to shuffle.
@@ -13,17 +14,18 @@ export function shuffleQuestions(
     currentIndex--;
 
     // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
+    [arrayCopy[currentIndex], arrayCopy[randomIndex]] = [
+      arrayCopy[randomIndex],
+      arrayCopy[currentIndex],
     ];
   }
 
-  return array;
+  return arrayCopy;
 }
 
 export function shuffleOptions(array: string[][]): string[][] {
-  let currentIndex = array.length,
+  const arrayCopy = [...array];
+  let currentIndex = arrayCopy.length,
     randomIndex;
 
   // While there remain elements to shuffle.
@@ -33,11 +35,11 @@ export function shuffleOptions(array: string[][]): string[][] {
     currentIndex--;
 
     // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
+    [arrayCopy[currentIndex], arrayCopy[randomIndex]] = [
+      arrayCopy[randomIndex],
+      arrayCopy[currentIndex],
     ];
   }
 
-  return array;
+  return arrayCopy;
 }

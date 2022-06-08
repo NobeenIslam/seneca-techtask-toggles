@@ -16,4 +16,3 @@ Limitations:
 * Currently, the toggles to do not display a sliding animation
 * There is no persistence of the page state when navigating between questions
 * At 320px the toggles do not modify to an top-down toggle layout  (for longer option texts)
-* Currently, answer positions are not randomised

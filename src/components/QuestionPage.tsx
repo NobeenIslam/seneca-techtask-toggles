@@ -45,7 +45,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log("Global State", state);
+  //console.log("Global State", state);
 
   //Everytime the assessment changes check if you need to lock the answer
   useEffect(() => {
