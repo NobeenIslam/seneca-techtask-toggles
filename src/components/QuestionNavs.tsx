@@ -21,7 +21,7 @@ export function QuestionNavs({
 
   //Need to reset the state when going to a new question or things break
   function handleClickNavigationButton(questionId: number) {
-    const questionDestination = questions[questionId - 1]; //Q4 accesses 3 part of array
+    const questionDestination = questions[questionId - 1]; //Q4 accesses index 3 of array
     const initialEmptyOptions = new Array(
       questionDestination.options.length
     ).fill("");
