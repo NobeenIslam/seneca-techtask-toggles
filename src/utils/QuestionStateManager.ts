@@ -1,4 +1,11 @@
-export const stateActionsLibrary = {
+export interface stateActionsLibraryInterface {
+  SET_SELECTED_ANSWERS_AND_ASSESSMENT: "SET_SELECTED_ANSWERS_AND_ASSESSMENT";
+  SET_TOGGLE_STYLE: "SET_TOGGLE_STYLE";
+  SET_LOCK: "SET_LOCK";
+  RESET: "RESET";
+}
+
+export const stateActionsLibrary: stateActionsLibraryInterface = {
   SET_SELECTED_ANSWERS_AND_ASSESSMENT: "SET_SELECTED_ANSWERS_AND_ASSESSMENT",
   SET_TOGGLE_STYLE: "SET_TOGGLE_STYLE",
   SET_LOCK: "SET_LOCK",

@@ -1,7 +1,10 @@
 import { QuestionInterface } from "./Interfaces";
 
-export function shuffle(array: QuestionInterface[]): QuestionInterface[] {
-  let currentIndex = array.length,
+export function shuffleQuestions(
+  array: QuestionInterface[]
+): QuestionInterface[] {
+  const arrayCopy = [...array];
+  let currentIndex = arrayCopy.length,
     randomIndex;
 
   // While there remain elements to shuffle.
@@ -11,11 +14,32 @@ export function shuffle(array: QuestionInterface[]): QuestionInterface[] {
     currentIndex--;
 
     // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
+    [arrayCopy[currentIndex], arrayCopy[randomIndex]] = [
+      arrayCopy[randomIndex],
+      arrayCopy[currentIndex],
     ];
   }
 
-  return array;
+  return arrayCopy;
+}
+
+export function shuffleOptions(array: string[][]): string[][] {
+  const arrayCopy = [...array];
+  let currentIndex = arrayCopy.length,
+    randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex !== 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [arrayCopy[currentIndex], arrayCopy[randomIndex]] = [
+      arrayCopy[randomIndex],
+      arrayCopy[currentIndex],
+    ];
+  }
+
+  return arrayCopy;
 }
