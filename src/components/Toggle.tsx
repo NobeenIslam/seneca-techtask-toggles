@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { dispatchCorrectToggleStyle } from "../utils/dispatchCorrectToggleStyle";
 import {
   assessmentLibrary,
   giveAnswerAssessment,
@@ -47,6 +48,8 @@ export function Toggle({
     });
   }, [location]);
 
+  console.log("Toggle State", isSelected);
+
   const optionOne = option[0];
   const optionTwo = option[1];
   const optionThree: string | undefined = option[2];
@@ -59,8 +62,9 @@ export function Toggle({
     if (isLocked) {
       return;
     }
-    //Toggle style on, update selected answers and check whether they are correct or not
     setIsSelected(selectedToggle);
+
+    //Update selected answers and "mark them"
     state.selectedAnswers[toggleNum] = selectedOption;
     const newSelectedAnswers = [...state.selectedAnswers];
 
@@ -82,28 +86,15 @@ export function Toggle({
         answerAssessment: answerAssessment,
       },
     });
+
     //Conditionals to set toggle styles based on how correct answer is
-    if (answerAssessment === assessmentLibrary.CORRECT) {
-      dispatch({
-        type: stateActionsLibrary.SET_TOGGLE_STYLE,
-        payload: { ...state, toggleStyle: "selectedCorrect" },
-      });
-    } else if (answerAssessment === assessmentLibrary.ALMOST_THERE) {
-      dispatch({
-        type: stateActionsLibrary.SET_TOGGLE_STYLE,
-        payload: { ...state, toggleStyle: "selectedAlmostThere" },
-      });
-    } else if (answerAssessment === assessmentLibrary.GETTING_BETTER) {
-      dispatch({
-        type: stateActionsLibrary.SET_TOGGLE_STYLE,
-        payload: { ...state, toggleStyle: "selectedGettingBetter" },
-      });
-    } else if (answerAssessment === assessmentLibrary.INCORRECT) {
-      dispatch({
-        type: stateActionsLibrary.SET_TOGGLE_STYLE,
-        payload: { ...state, toggleStyle: "selectedAlmostThere" },
-      });
-    }
+    dispatchCorrectToggleStyle(
+      answerAssessment,
+      assessmentLibrary,
+      state,
+      stateActionsLibrary,
+      dispatch
+    );
   }
 
   //Style toggle if it's selected
