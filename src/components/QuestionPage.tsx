@@ -1,5 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { Link, useParams } from "react-router-dom";
+import { createMessage } from "../utils/createMessage";
+import { determineBackgroundStyle } from "../utils/determineBackgroundStyle";
 import { assessmentLibrary } from "../utils/giveAnswerAssessment";
 import { QuestionInterface } from "../utils/Interfaces";
 import {
@@ -7,6 +9,7 @@ import {
   stateActionsLibrary,
   StateInterface,
 } from "../utils/QuestionStateManager";
+import { QuestionNavs } from "./QuestionNavs";
 import { Toggle } from "./Toggle";
 
 interface QuestionProps {
@@ -16,9 +19,15 @@ interface QuestionProps {
 export function QuestionPage({ questions }: QuestionProps): JSX.Element {
   const { questionId } = useParams();
 
-  let thisQuestion: QuestionInterface | [] = [];
+  let thisQuestion: QuestionInterface = {
+    questionId: 0,
+    question: "",
+    options: [],
+    answers: [],
+  };
+
   if (questionId === undefined) {
-    thisQuestion = questions[0];
+    console.error("useParams has extracted an undefined questionId");
   } else {
     thisQuestion = questions[parseInt(questionId) - 1]; //So question 1 appears as Q1 not Q0
   }
@@ -28,7 +37,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
 
   const initialState: StateInterface = {
     selectedAnswers: new Array(questionOptions.length).fill(""),
-    //For flexibility when number of options changes,
+    //The way an answer is selected in toggle depends on the array index, so the initialised version needs to match
     answerAssessment: "",
     toggleStyle: "unselected",
     isLocked: false,
@@ -38,6 +47,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
 
   //console.log("Global State", state);
 
+  //Everytime the assessment changes check if you need to lock the answer
   useEffect(() => {
     if (state.answerAssessment === assessmentLibrary.CORRECT) {
       dispatch({ type: stateActionsLibrary.SET_LOCK, payload: { ...state } });
@@ -46,77 +56,23 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.answerAssessment]);
 
-  let backgroundStyle = "backgroundIncorrect";
-
-  //Conditionals to change background based on selection
-  if (state.answerAssessment === assessmentLibrary.CORRECT) {
-    backgroundStyle = "backgroundCorrect";
-  } else if (state.answerAssessment === assessmentLibrary.ALMOST_THERE) {
-    backgroundStyle = "backgroundAlmostThere";
-  } else if (state.answerAssessment === assessmentLibrary.GETTING_BETTER) {
-    backgroundStyle = "backgroundGettingBetter";
-  } else if (state.answerAssessment === assessmentLibrary.INCORRECT) {
-    backgroundStyle = "backgroundIncorrect";
-  }
-
-  const questionToggles: JSX.Element[] = questionOptions.map(
-    (option, index) => (
-      <Toggle
-        key={index}
-        toggleNum={index}
-        option={option}
-        state={state}
-        dispatch={dispatch}
-        actualAnswers={actualAnswers}
-      />
-    )
+  const backgroundStyle = determineBackgroundStyle(
+    state.answerAssessment,
+    assessmentLibrary
   );
 
-  const questionIds: number[] = [];
-  for (let id = 1; id <= questions.length; id++) {
-    questionIds.push(id);
-  }
+  const optionToggles: JSX.Element[] = questionOptions.map((option, index) => (
+    <Toggle
+      key={index}
+      toggleNum={index}
+      option={option}
+      state={state}
+      dispatch={dispatch}
+      actualAnswers={actualAnswers}
+    />
+  ));
 
-  //Need to reset the state when going to a new question or things break
-  function handleClickNavigationButton(questionId: number) {
-    const questionDestination = questions[questionId - 1]; //Q4 accesses 3 part of array
-    console.log("We are going to:", questionDestination);
-    const initialEmptyOptions = new Array(
-      questionDestination.options.length
-    ).fill("");
-    dispatch({
-      type: stateActionsLibrary.RESET,
-      payload: {
-        selectedAnswers: initialEmptyOptions,
-        answerAssessment: "",
-        toggleStyle: "unselected",
-        isLocked: false,
-      },
-    });
-  }
-
-  const questionNavigationButtons: JSX.Element[] = questionIds.map(
-    (questionId) => (
-      <Link key={questionId} to={`/${questionId}`}>
-        <button
-          onClick={() => handleClickNavigationButton(questionId)}
-          className="defaultFont btn btn-success btn-lg m-2"
-        >
-          <h5>Q{questionId}</h5>
-        </button>
-      </Link>
-    )
-  );
-
-  //For the answer message which says incorrect / correct at the bottom of a page
-  let message = "";
-  if (state.answerAssessment === "") {
-    message = "Please select your answers";
-  } else {
-    state.answerAssessment === assessmentLibrary.CORRECT
-      ? (message = "The answer is correct")
-      : (message = "The answer is incorrect");
-  }
+  const message = createMessage(state.answerAssessment, assessmentLibrary);
 
   return (
     <main className={`${backgroundStyle} pageSize`}>
@@ -133,12 +89,9 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
         <h1 className="text-center defaultFont questionText mb-5">
           {thisQuestion.question}
         </h1>
-        <section className="container mx-auto mb-5">{questionToggles}</section>
+        <section className="container mx-auto mb-5">{optionToggles}</section>
         <h2 className="text-center defaultFont resultText">{message}</h2>
-        <div className="d-flex flex-row justify-content-center">
-          {" "}
-          <div>{questionNavigationButtons}</div>
-        </div>
+        <QuestionNavs questions={questions} dispatch={dispatch} />
       </section>
     </main>
   );
