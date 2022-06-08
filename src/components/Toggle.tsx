@@ -5,6 +5,7 @@ import {
   assessmentLibrary,
   giveAnswerAssessment,
 } from "../utils/giveAnswerAssessment";
+import { markSelectedAnswers } from "../utils/markSelectedAnswers";
 import {
   StateAction,
   stateActionsLibrary,
@@ -48,7 +49,7 @@ export function Toggle({
     });
   }, [location]);
 
-  console.log("Toggle State", isSelected);
+  //console.log("Toggle State", isSelected);
 
   const optionOne = option[0];
   const optionTwo = option[1];
@@ -68,9 +69,9 @@ export function Toggle({
     state.selectedAnswers[toggleNum] = selectedOption;
     const newSelectedAnswers = [...state.selectedAnswers];
 
-    const areSelectionsCorrect: boolean[] = newSelectedAnswers.map(
-      (selectedAnswer, answerIndex) =>
-        selectedAnswer === actualAnswers[answerIndex]
+    const areSelectionsCorrect: boolean[] = markSelectedAnswers(
+      newSelectedAnswers,
+      actualAnswers
     );
 
     const answerAssessment = giveAnswerAssessment(
