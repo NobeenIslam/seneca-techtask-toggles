@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { Link, useParams } from "react-router-dom";
 import { createMessage } from "../utils/createMessage";
+import { determineBackgroundStyle } from "../utils/determineBackgroundStyle";
 import { assessmentLibrary } from "../utils/giveAnswerAssessment";
 import { QuestionInterface } from "../utils/Interfaces";
 import {
@@ -49,18 +50,10 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.answerAssessment]);
 
-  let backgroundStyle = "backgroundIncorrect";
-
-  //Conditionals to change background based on selection
-  if (state.answerAssessment === assessmentLibrary.CORRECT) {
-    backgroundStyle = "backgroundCorrect";
-  } else if (state.answerAssessment === assessmentLibrary.ALMOST_THERE) {
-    backgroundStyle = "backgroundAlmostThere";
-  } else if (state.answerAssessment === assessmentLibrary.GETTING_BETTER) {
-    backgroundStyle = "backgroundGettingBetter";
-  } else if (state.answerAssessment === assessmentLibrary.INCORRECT) {
-    backgroundStyle = "backgroundIncorrect";
-  }
+  const backgroundStyle = determineBackgroundStyle(
+    state.answerAssessment,
+    assessmentLibrary
+  );
 
   const questionToggles: JSX.Element[] = questionOptions.map(
     (option, index) => (
