@@ -66,7 +66,7 @@ export function Toggle({
     setIsSelected(selectedToggle);
 
     //Update selected answers and "mark them"
-    state.selectedAnswers[toggleNum] = selectedOption;
+    state.selectedAnswers[toggleNum] = selectedOption; //If the first toggle, inserts selected answer into first element (0th index)
     const newSelectedAnswers = [...state.selectedAnswers];
 
     const areSelectionsCorrect: boolean[] = markSelectedAnswers(
