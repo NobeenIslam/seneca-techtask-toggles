@@ -47,11 +47,11 @@
 
 /* FOR BUTTONS */
 
-.rectangle {
+.toggleFrame {
   display: flex;
   flex-direction: row;
 
-  margin-bottom:25px;
+  margin-bottom: 25px;
   margin-right: auto;
   margin-left: auto;
 
@@ -62,14 +62,13 @@
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
-.buttonContainer{
+.buttonContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   text-align: center;
-
 
   width: 50%;
   border-radius: 100px;
@@ -120,7 +119,7 @@
 
 .selectedIncorrect {
   background: #f8caa3;
-  
+
   font-weight: 700;
   font-size: 24px;
   line-height: 160%;
@@ -130,8 +129,8 @@
 }
 
 /* Responsive for phone */
-@media all and (max-width: 320px){
-  .rectangle {
+@media all and (max-width: 320px) {
+  .toggleFrame {
     display: flex;
     flex-direction: column;
     justify-content: stretch;
@@ -143,18 +142,26 @@
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
 
-  .buttonContainer{
+  .buttonContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 
     text-align: center;
-  
+
     width: 100%;
-    border-radius: 24px 24px 24px 24px;
+    border-radius: 24px 24px 0px 0px;
   }
-  
+
+  /* If it's declared in the className it'll override the border in buttonContainer. Needed so I could have different borders for the positions of each option */
+  .borderMiddle {
+    border-radius: 0;
+  }
+
+  .borderBottom {
+    border-radius: 0 0 24px 24px;
+  }
 }
 
 /* Debugging */

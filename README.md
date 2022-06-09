@@ -15,4 +15,4 @@ This solution assumes:
 Limitations:
 * Currently, the toggles to do not display a sliding animation
 * There is no persistence of the page state when navigating between questions, so a question will lock when correct, but coming back to it through navigation will refresh it.
-* At 320px the toggles do not modify to an top-down toggle layout  (for longer option texts)
+* At 320px the toggles do not modify to top-down layout but there is a margin beneath the second option, that I was unable to remove

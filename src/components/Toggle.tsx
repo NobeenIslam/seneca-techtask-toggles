@@ -105,8 +105,11 @@ export function Toggle({
     : "unselected";
   const thirdToggleStyle = isSelected.third ? state.toggleStyle : "unselected";
 
+  const sceondOptionBorder320px =
+    option.length === 3 ? "borderMiddle" : "borderBottom";
+
   return (
-    <section className="rectangle">
+    <section className="toggleFrame">
       <div
         onClick={() =>
           handleClickToggle(
@@ -127,7 +130,7 @@ export function Toggle({
             state.isLocked
           )
         }
-        className={`buttonContainer defaultFont ${secondToggleStyle}`}
+        className={`buttonContainer defaultFont ${sceondOptionBorder320px} ${secondToggleStyle}`}
       >
         {optionTwo}
       </div>
@@ -140,7 +143,7 @@ export function Toggle({
               state.isLocked
             )
           }
-          className={`buttonContainer defaultFont ${thirdToggleStyle}`}
+          className={`buttonContainer defaultFont borderBottom ${thirdToggleStyle}`}
         >
           {optionThree}
         </div>
