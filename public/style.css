@@ -65,6 +65,7 @@
   box-sizing: border-box;
   border-radius: 100px;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  position: relative;
 }
 
 .selectedCorrect {
@@ -77,6 +78,11 @@
   /* or 38px */
 
   color: #4cad94;
+
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 .selectedAlmostThere {
@@ -89,6 +95,11 @@
   /* or 38px */
 
   color: #e4b158;
+
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 .selectedGettingBetter {
@@ -101,6 +112,11 @@
   /* or 38px */
 
   color: #e47958;
+
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 .selectedIncorrect {
@@ -113,6 +129,11 @@
   /* or 38px */
 
   color: #9f938b;
+
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 /* Debugging */
