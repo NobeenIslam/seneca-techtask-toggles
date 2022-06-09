@@ -106,7 +106,7 @@ export function Toggle({
   const thirdToggleStyle = isSelected.third ? state.toggleStyle : "unselected";
 
   return (
-    <section className="d-flex flex-row rectangle mb-2 mx-auto">
+    <section className="rectangle">
       <div
         onClick={() =>
           handleClickToggle(
@@ -115,9 +115,9 @@ export function Toggle({
             state.isLocked
           )
         }
-        className={`d-flex flex-column w-50 ${firstToggleStyle}`}
+        className={`buttonContainer defaultFont ${firstToggleStyle}`}
       >
-        <p className="text-center m-auto defaultFont">{optionOne}</p>
+        {optionOne}
       </div>
       <div
         onClick={() =>
@@ -127,9 +127,9 @@ export function Toggle({
             state.isLocked
           )
         }
-        className={`d-flex flex-column w-50 ${secondToggleStyle}`}
+        className={`buttonContainer defaultFont ${secondToggleStyle}`}
       >
-        <p className="text-center m-auto defaultFont">{optionTwo}</p>
+        {optionTwo}
       </div>
       {optionThree && (
         <div
@@ -140,9 +140,9 @@ export function Toggle({
               state.isLocked
             )
           }
-          className={`d-flex flex-column w-50 ${thirdToggleStyle}`}
+          className={`buttonContainer defaultFont ${thirdToggleStyle}`}
         >
-          <p className="m-auto defaultFont">{optionThree}</p>
+          {optionThree}
         </div>
       )}
     </section>
