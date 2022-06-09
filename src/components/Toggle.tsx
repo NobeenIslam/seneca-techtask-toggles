@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { animated, useSpring } from "react-spring";
 import { dispatchCorrectToggleStyle } from "../utils/dispatchCorrectToggleStyle";
 import {
   assessmentLibrary,
@@ -39,6 +40,51 @@ export function Toggle({
     third: false,
   });
 
+  //EVERYTHING FOR THE SLIDER:
+
+  const divRef = useRef<HTMLDivElement>(null);
+  const [positions, setPositions] = useState({
+    width: 0,
+    offset: 0,
+  });
+
+  const props = useSpring({ left: positions.offset, width: positions.width });
+
+  function calculatePositions() {
+    if (divRef.current === null) {
+      return { offset: 0, width: 0 };
+    } else {
+      const ref = divRef.current;
+      if (
+        isSelected ===
+        {
+          first: false,
+          second: false,
+          third: false,
+        }
+      ) {
+        return { offset: 0, width: 0 };
+      }
+      let activeIndex = 0;
+      if (isSelected.second === true) {
+        activeIndex = 1;
+      } else if (isSelected.third === true) {
+        activeIndex = 2;
+      }
+      const activeItem = ref.children[activeIndex] as HTMLElement;
+      const width = activeItem.offsetWidth;
+      const offset = activeItem.offsetLeft;
+      setPositions({ width, offset });
+    }
+  }
+
+  //Will only calculate positions when active state changes (i.e button click)
+  useEffect(() => {
+    calculatePositions();
+
+    //eslint-disable-next-line
+  }, [isSelected]);
+
   //Reset togglestates to not be selected when changing pages
   const location = useLocation();
   useEffect(() => {
@@ -49,7 +95,7 @@ export function Toggle({
     });
   }, [location]);
 
-  //console.log("Toggle State", isSelected);
+  //console.log(isSelected)
 
   const optionOne = option[0];
   const optionTwo = option[1];
@@ -99,52 +145,55 @@ export function Toggle({
   }
 
   //Style toggle if it's selected
-  const firstToggleStyle = isSelected.first ? state.toggleStyle : "unselected";
-  const secondToggleStyle = isSelected.second
-    ? state.toggleStyle
-    : "unselected";
-  const thirdToggleStyle = isSelected.third ? state.toggleStyle : "unselected";
+  // const firstToggleStyle = isSelected.first ? state.toggleStyle : "unselected";
+  // const secondToggleStyle = isSelected.second
+  //   ? state.toggleStyle
+  //   : "unselected";
+  // const thirdToggleStyle = isSelected.third ? state.toggleStyle : "unselected";
 
   return (
-    <section className="d-flex flex-row rectangle mb-2 mx-auto">
-      <div
-        onClick={() =>
-          handleClickToggle(
-            { first: true, second: false, third: false },
-            optionOne,
-            state.isLocked
-          )
-        }
-        className={`d-flex flex-column w-50 ${firstToggleStyle}`}
-      >
-        <p className="m-auto defaultFont">{optionOne}</p>
-      </div>
-      <div
-        onClick={() =>
-          handleClickToggle(
-            { first: false, second: true, third: false },
-            optionTwo,
-            state.isLocked
-          )
-        }
-        className={`d-flex flex-column w-50 ${secondToggleStyle}`}
-      >
-        <p className="m-auto defaultFont">{optionTwo}</p>
-      </div>
-      {optionThree && (
+    <section className="d-flex flex-row flex-wrap rectangle mb-2 mx-auto">
+      <animated.div className={state.toggleStyle} style={props}></animated.div>
+      <div ref={divRef} className="d-flex w-100 h-100">
         <div
           onClick={() =>
             handleClickToggle(
-              { first: false, second: false, third: true },
-              optionThree,
+              { first: true, second: false, third: false },
+              optionOne,
               state.isLocked
             )
           }
-          className={`d-flex flex-column w-50 ${thirdToggleStyle}`}
+          className={`d-flex flex-column w-50 unselected`}
         >
-          <p className="m-auto defaultFont">{optionThree}</p>
+          <p className="m-auto defaultFont">{optionOne}</p>
         </div>
-      )}
+        <div
+          onClick={() =>
+            handleClickToggle(
+              { first: false, second: true, third: false },
+              optionTwo,
+              state.isLocked
+            )
+          }
+          className={`d-flex flex-column w-50 unselected`}
+        >
+          <p className="m-auto defaultFont ">{optionTwo}</p>
+        </div>
+        {optionThree && (
+          <div
+            onClick={() =>
+              handleClickToggle(
+                { first: false, second: false, third: true },
+                optionThree,
+                state.isLocked
+              )
+            }
+            className={`d-flex flex-column w-50 unselected`}
+          >
+            <p className="m-auto defaultFont">{optionThree}</p>
+          </div>
+        )}
+      </div>
     </section>
   );
 }
