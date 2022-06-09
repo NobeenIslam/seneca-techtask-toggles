@@ -13,7 +13,7 @@ function App(): JSX.Element {
   });
 
   return (
-    <>
+    <main>
       <Routes>
         <Route
           path="/"
@@ -24,7 +24,7 @@ function App(): JSX.Element {
           element={<QuestionPage questions={shuffledQuestionAndOptions} />}
         ></Route>
       </Routes>
-    </>
+    </main>
   );
 }
 

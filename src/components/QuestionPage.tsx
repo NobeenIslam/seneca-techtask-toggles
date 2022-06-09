@@ -75,7 +75,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
   const message = createMessage(state.answerAssessment, assessmentLibrary);
 
   return (
-    <main className={`${backgroundStyle} pageSize`}>
+    <main className={`${backgroundStyle} pageHeight`}>
       <div>""</div>
       <section className="mt-1">
         <div className="d-flex flex-row justify-content-center">

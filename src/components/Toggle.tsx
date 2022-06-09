@@ -117,7 +117,7 @@ export function Toggle({
         }
         className={`d-flex flex-column w-50 ${firstToggleStyle}`}
       >
-        <p className="m-auto defaultFont">{optionOne}</p>
+        <p className="text-center m-auto defaultFont">{optionOne}</p>
       </div>
       <div
         onClick={() =>
@@ -129,7 +129,7 @@ export function Toggle({
         }
         className={`d-flex flex-column w-50 ${secondToggleStyle}`}
       >
-        <p className="m-auto defaultFont">{optionTwo}</p>
+        <p className="text-center m-auto defaultFont">{optionTwo}</p>
       </div>
       {optionThree && (
         <div

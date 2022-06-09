@@ -1,7 +1,6 @@
 /* Page sizing and positioning */
-.pageSize {
-  /* width: 1280px; */
-  height: 720px;
+.pageHeight {
+  min-height: 720px;
 }
 
 /* Question Page CSS */
@@ -59,8 +58,7 @@
 /* Toggles */
 
 .rectangle {
-  /* width: 1280px;*/
-  height: 80px;
+  min-height: 80px;
   border: 2px solid #f9d29f;
   box-sizing: border-box;
   border-radius: 100px;
