@@ -66,7 +66,7 @@ export function Toggle({
     setIsSelected(selectedToggle);
 
     //Update selected answers and "mark them"
-    state.selectedAnswers[toggleNum] = selectedOption;
+    state.selectedAnswers[toggleNum] = selectedOption; //If the first toggle, inserts selected answer into first element (0th index)
     const newSelectedAnswers = [...state.selectedAnswers];
 
     const areSelectionsCorrect: boolean[] = markSelectedAnswers(
@@ -105,8 +105,11 @@ export function Toggle({
     : "unselected";
   const thirdToggleStyle = isSelected.third ? state.toggleStyle : "unselected";
 
+  const sceondOptionBorder320px =
+    option.length === 3 ? "borderMiddle" : "borderBottom";
+
   return (
-    <section className="d-flex flex-row rectangle mb-2 mx-auto">
+    <section className="toggleFrame">
       <div
         onClick={() =>
           handleClickToggle(
@@ -115,9 +118,9 @@ export function Toggle({
             state.isLocked
           )
         }
-        className={`d-flex flex-column w-50 ${firstToggleStyle}`}
+        className={`buttonContainer defaultFont ${firstToggleStyle}`}
       >
-        <p className="m-auto defaultFont">{optionOne}</p>
+        {optionOne}
       </div>
       <div
         onClick={() =>
@@ -127,9 +130,9 @@ export function Toggle({
             state.isLocked
           )
         }
-        className={`d-flex flex-column w-50 ${secondToggleStyle}`}
+        className={`buttonContainer defaultFont ${sceondOptionBorder320px} ${secondToggleStyle}`}
       >
-        <p className="m-auto defaultFont">{optionTwo}</p>
+        {optionTwo}
       </div>
       {optionThree && (
         <div
@@ -140,9 +143,9 @@ export function Toggle({
               state.isLocked
             )
           }
-          className={`d-flex flex-column w-50 ${thirdToggleStyle}`}
+          className={`buttonContainer defaultFont borderBottom ${thirdToggleStyle}`}
         >
-          <p className="m-auto defaultFont">{optionThree}</p>
+          {optionThree}
         </div>
       )}
     </section>

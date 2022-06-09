@@ -1,7 +1,6 @@
 /* Page sizing and positioning */
-.pageSize {
-  /* width: 1280px; */
-  height: 720px;
+.pageHeight {
+  min-height: 720px;
 }
 
 /* Question Page CSS */
@@ -46,6 +45,35 @@
   color: #ffffff;
 }
 
+/* FOR BUTTONS */
+
+.toggleFrame {
+  display: flex;
+  flex-direction: row;
+
+  margin-bottom: 25px;
+  margin-right: auto;
+  margin-left: auto;
+
+  min-height: 80px;
+  border: 2px solid #f9d29f;
+  box-sizing: border-box;
+  border-radius: 100px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  width: 50%;
+  border-radius: 100px;
+}
+
 .unselected {
   font-weight: 700;
   font-size: 24px;
@@ -56,20 +84,8 @@
   color: #ffffff;
 }
 
-/* Toggles */
-
-.rectangle {
-  /* width: 1280px;*/
-  height: 80px;
-  border: 2px solid #f9d29f;
-  box-sizing: border-box;
-  border-radius: 100px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
-
 .selectedCorrect {
   background: #a5e7e2;
-  border-radius: 100px;
 
   font-weight: 700;
   font-size: 24px;
@@ -81,7 +97,6 @@
 
 .selectedAlmostThere {
   background: #f2cbbd;
-  border-radius: 100px;
 
   font-weight: 700;
   font-size: 24px;
@@ -93,7 +108,6 @@
 
 .selectedGettingBetter {
   background: #f2cbbd;
-  border-radius: 100px;
 
   font-weight: 700;
   font-size: 24px;
@@ -105,8 +119,7 @@
 
 .selectedIncorrect {
   background: #f8caa3;
-  border-radius: 100px;
-  height: 100%;
+
   font-weight: 700;
   font-size: 24px;
   line-height: 160%;
@@ -115,10 +128,45 @@
   color: #9f938b;
 }
 
+/* Responsive for phone */
+@media all and (max-width: 320px) {
+  .toggleFrame {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+
+    min-height: 96px;
+    border: 2px solid #f9d29f;
+    box-sizing: border-box;
+    border-radius: 24px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  }
+
+  .buttonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    width: 100%;
+    border-radius: 24px 24px 0px 0px;
+  }
+
+  /* If it's declared in the className it'll override the border in buttonContainer. Needed so I could have different borders for the positions of each option */
+  .borderMiddle {
+    border-radius: 0;
+  }
+
+  .borderBottom {
+    border-radius: 0 0 24px 24px;
+  }
+}
+
 /* Debugging */
 .red {
   background-color: red;
-  border: solid;
 }
 
 .green {

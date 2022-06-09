@@ -8,7 +8,7 @@ interface HomePageProps {
 //Clicking back to home doesn't reset the state, but navigating to the first question through "Begin learning" triggers first render, which resets automatically
 export function HomePage({ questions }: HomePageProps): JSX.Element {
   return (
-    <main className="d-flex backgroundCorrect pageSize">
+    <main className="d-flex backgroundCorrect pageHeight">
       <div className="m-auto">
         <Link to="/1">
           <button className="defaultFont btn btn-success btn-lg">

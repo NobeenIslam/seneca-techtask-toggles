@@ -13,6 +13,6 @@ This solution assumes:
 * Options shouldn't be pre-selected when the user is presented with a question
 
 Limitations:
-* Currently, the toggles to do not display a sliding animation
-* There is no persistence of the page state when navigating between questions
-* At 320px the toggles do not modify to an top-down toggle layout  (for longer option texts)
+* Currently, the toggles to do not display a sliding animation. Branch toggle-attampt-1 contains an attempt at it's implementation, but it contains bugs. 
+* There is no persistence of the page state when navigating between questions, so a question will lock when correct, but coming back to it through navigation will refresh it.
+* At 320px the toggle modify to top-down layout but there is a margin beneath the second option, that I was unable to remove
