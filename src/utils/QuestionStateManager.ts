@@ -36,29 +36,40 @@ export function reducer(
   states: StateInterface[],
   action: StateAction
 ): StateInterface[] {
+  const currQuestionPropertiesToUpdate = states[action.questionRef];
+
   switch (action.type) {
     case stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT: {
-      //console.log("Before:", states[action.questionRef]);
-      states[action.questionRef].selectedAnswers =
-        action.questionProperties.selectedAnswers;
-      states[action.questionRef].answerAssessment =
-        action.questionProperties.answerAssessment;
-      //console.log("After:", states[action.questionRef]);
-
+      const updatedQuestionProperties = {
+        ...currQuestionPropertiesToUpdate,
+        selectedAnswers: action.questionProperties.selectedAnswers,
+        answerAssessment: action.questionProperties.answerAssessment,
+      };
+      states[action.questionRef] = updatedQuestionProperties;
       return [...states];
     }
     case stateActionsLibrary.SET_SELECTED_TOGGLES: {
-      states[action.questionRef].selectedToggles =
-        action.questionProperties.selectedToggles;
+      const updatedQuestionProperties = {
+        ...currQuestionPropertiesToUpdate,
+        selectedToggles: action.questionProperties.selectedToggles,
+      };
+      states[action.questionRef] = updatedQuestionProperties;
       return [...states];
     }
     case stateActionsLibrary.SET_TOGGLE_STYLE: {
-      states[action.questionRef].toggleStyle =
-        action.questionProperties.toggleStyle;
+      const updatedQuestionProperties = {
+        ...currQuestionPropertiesToUpdate,
+        toggleStyle: action.questionProperties.toggleStyle,
+      };
+      states[action.questionRef] = updatedQuestionProperties;
       return [...states];
     }
     case stateActionsLibrary.SET_LOCK: {
-      states[action.questionRef].isLocked = true;
+      const updatedQuestionProperties = {
+        ...currQuestionPropertiesToUpdate,
+        isLocked: true,
+      };
+      states[action.questionRef] = updatedQuestionProperties;
       return [...states];
     }
     default: {

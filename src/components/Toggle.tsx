@@ -36,6 +36,8 @@ export function Toggle({
   const optionOne = option[0];
   const optionTwo = option[1];
   const optionThree: string | undefined = option[2];
+  //For a question with 4 options, the array contains 4 selected states.
+  const currSelectedTogglesForQuestion = questionProperties.selectedToggles;
 
   function handleClickToggle(
     selectedToggle: isSelectedInterface,
@@ -46,15 +48,15 @@ export function Toggle({
       return;
     }
 
-    questionProperties.selectedToggles[toggleNum] = selectedToggle;
-    const newSelectedToggles = [...questionProperties.selectedToggles];
+    currSelectedTogglesForQuestion[toggleNum] = selectedToggle;
+    const updatedSelectedToggles = [...currSelectedTogglesForQuestion];
 
     dispatch({
       type: stateActionsLibrary.SET_SELECTED_TOGGLES,
       questionRef: questionRef,
       questionProperties: {
         ...questionProperties,
-        selectedToggles: newSelectedToggles,
+        selectedToggles: updatedSelectedToggles,
       },
     });
 
@@ -93,14 +95,14 @@ export function Toggle({
     );
   }
 
-  //Style toggle if it's selected
-  const firstToggleStyle = questionProperties.selectedToggles[toggleNum].first
+  //Style toggle if it's selected. If one toggleNum == 0 then style that toggle
+  const firstToggleStyle = currSelectedTogglesForQuestion[toggleNum].first
     ? questionProperties.toggleStyle
     : "unselected";
-  const secondToggleStyle = questionProperties.selectedToggles[toggleNum].second
+  const secondToggleStyle = currSelectedTogglesForQuestion[toggleNum].second
     ? questionProperties.toggleStyle
     : "unselected";
-  const thirdToggleStyle = questionProperties.selectedToggles[toggleNum].third
+  const thirdToggleStyle = currSelectedTogglesForQuestion[toggleNum].third
     ? questionProperties.toggleStyle
     : "unselected";
 
