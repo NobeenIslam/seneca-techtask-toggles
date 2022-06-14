@@ -21,7 +21,7 @@ export interface StateInterface {
 
 export interface StateAction {
   type: string;
-  stateProperties: StateInterface;
+  questionProperties: StateInterface;
   questionRef: number;
 }
 
@@ -33,16 +33,16 @@ export function reducer(
     case stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT: {
       console.log("Before:", states[action.questionRef]);
       states[action.questionRef].selectedAnswers =
-        action.stateProperties.selectedAnswers;
+        action.questionProperties.selectedAnswers;
       states[action.questionRef].answerAssessment =
-        action.stateProperties.answerAssessment;
+        action.questionProperties.answerAssessment;
       console.log("After:", states[action.questionRef]);
 
       return [...states];
     }
     case stateActionsLibrary.SET_TOGGLE_STYLE: {
       states[action.questionRef].toggleStyle =
-        action.stateProperties.toggleStyle;
+        action.questionProperties.toggleStyle;
       return [...states];
     }
     case stateActionsLibrary.SET_LOCK: {

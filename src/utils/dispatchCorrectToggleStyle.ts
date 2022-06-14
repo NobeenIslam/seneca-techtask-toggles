@@ -8,7 +8,7 @@ import {
 export function dispatchCorrectToggleStyle(
   answerAssessment: string,
   assessmentLibrary: AssementLevelsInterface,
-  state: StateInterface,
+  questionProperties: StateInterface,
   questionRef: number,
   stateActionsLibrary: stateActionsLibraryInterface,
   dispatch: React.Dispatch<StateAction>
@@ -16,25 +16,37 @@ export function dispatchCorrectToggleStyle(
   if (answerAssessment === assessmentLibrary.CORRECT) {
     dispatch({
       type: stateActionsLibrary.SET_TOGGLE_STYLE,
-      stateProperties: { ...state, toggleStyle: "selectedCorrect" },
+      questionProperties: {
+        ...questionProperties,
+        toggleStyle: "selectedCorrect",
+      },
       questionRef: questionRef,
     });
   } else if (answerAssessment === assessmentLibrary.ALMOST_THERE) {
     dispatch({
       type: stateActionsLibrary.SET_TOGGLE_STYLE,
-      stateProperties: { ...state, toggleStyle: "selectedAlmostThere" },
+      questionProperties: {
+        ...questionProperties,
+        toggleStyle: "selectedAlmostThere",
+      },
       questionRef: questionRef,
     });
   } else if (answerAssessment === assessmentLibrary.GETTING_BETTER) {
     dispatch({
       type: stateActionsLibrary.SET_TOGGLE_STYLE,
-      stateProperties: { ...state, toggleStyle: "selectedGettingBetter" },
+      questionProperties: {
+        ...questionProperties,
+        toggleStyle: "selectedGettingBetter",
+      },
       questionRef: questionRef,
     });
   } else if (answerAssessment === assessmentLibrary.INCORRECT) {
     dispatch({
       type: stateActionsLibrary.SET_TOGGLE_STYLE,
-      stateProperties: { ...state, toggleStyle: "selectedAlmostThere" },
+      questionProperties: {
+        ...questionProperties,
+        toggleStyle: "selectedAlmostThere",
+      },
       questionRef: questionRef,
     });
   }

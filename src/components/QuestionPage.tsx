@@ -29,27 +29,26 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
   const initialStates = [];
 
   for (const question of questions) {
-    const initialState: StateInterface = {
+    const initialQuestionState: StateInterface = {
       selectedAnswers: new Array(question.options.length).fill(""),
       //The way an answer is selected in toggle depends on the array index, so the initialised version needs to match
       answerAssessment: "",
       toggleStyle: "unselected",
       isLocked: false,
     };
-    initialStates.push(initialState);
+    initialStates.push(initialQuestionState);
   }
 
   const [states, dispatch] = useReducer(reducer, initialStates);
 
-  console.log("Global State", states);
-  console.log("Questions,", questions);
+  //console.log("Global State", states);
 
   //Everytime the assessment changes check if you need to lock the answer
   useEffect(() => {
     if (states[questionRef].answerAssessment === assessmentLibrary.CORRECT) {
       dispatch({
         type: stateActionsLibrary.SET_LOCK,
-        stateProperties: states[questionRef],
+        questionProperties: states[questionRef],
         questionRef: questionRef,
       });
     }
@@ -67,7 +66,7 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
       key={index}
       toggleNum={index}
       option={option}
-      state={states[questionRef]}
+      questionProperties={states[questionRef]}
       questionRef={questionRef}
       dispatch={dispatch}
       actualAnswers={actualAnswers}
