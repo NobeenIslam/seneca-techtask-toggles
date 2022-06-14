@@ -2,55 +2,78 @@ export interface stateActionsLibraryInterface {
   SET_SELECTED_ANSWERS_AND_ASSESSMENT: "SET_SELECTED_ANSWERS_AND_ASSESSMENT";
   SET_TOGGLE_STYLE: "SET_TOGGLE_STYLE";
   SET_LOCK: "SET_LOCK";
-  RESET: "RESET";
+  SET_SELECTED_TOGGLES: "SET_SELECTED_TOGGLES";
 }
 
 export const stateActionsLibrary: stateActionsLibraryInterface = {
   SET_SELECTED_ANSWERS_AND_ASSESSMENT: "SET_SELECTED_ANSWERS_AND_ASSESSMENT",
   SET_TOGGLE_STYLE: "SET_TOGGLE_STYLE",
   SET_LOCK: "SET_LOCK",
-  RESET: "RESET",
+  SET_SELECTED_TOGGLES: "SET_SELECTED_TOGGLES",
 };
+
+interface isSelectedInterface {
+  first: boolean;
+  second: boolean;
+  third: boolean;
+}
 
 export interface StateInterface {
   selectedAnswers: string[];
   toggleStyle: string;
   answerAssessment: string;
   isLocked: boolean;
+  selectedToggles: isSelectedInterface[];
 }
 
 export interface StateAction {
   type: string;
-  payload: StateInterface;
+  questionProperties: StateInterface;
+  questionRef: number;
 }
 
 export function reducer(
-  state: StateInterface,
+  states: StateInterface[],
   action: StateAction
-): StateInterface {
+): StateInterface[] {
+  const currQuestionPropertiesToUpdate = states[action.questionRef];
+
   switch (action.type) {
     case stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT: {
-      return {
-        ...state,
-        selectedAnswers: action.payload.selectedAnswers,
-        answerAssessment: action.payload.answerAssessment,
+      const updatedQuestionProperties = {
+        ...currQuestionPropertiesToUpdate,
+        selectedAnswers: action.questionProperties.selectedAnswers,
+        answerAssessment: action.questionProperties.answerAssessment,
       };
+      states[action.questionRef] = updatedQuestionProperties;
+      return [...states];
+    }
+    case stateActionsLibrary.SET_SELECTED_TOGGLES: {
+      const updatedQuestionProperties = {
+        ...currQuestionPropertiesToUpdate,
+        selectedToggles: action.questionProperties.selectedToggles,
+      };
+      states[action.questionRef] = updatedQuestionProperties;
+      return [...states];
     }
     case stateActionsLibrary.SET_TOGGLE_STYLE: {
-      return {
-        ...state,
-        toggleStyle: action.payload.toggleStyle,
+      const updatedQuestionProperties = {
+        ...currQuestionPropertiesToUpdate,
+        toggleStyle: action.questionProperties.toggleStyle,
       };
+      states[action.questionRef] = updatedQuestionProperties;
+      return [...states];
     }
     case stateActionsLibrary.SET_LOCK: {
-      return { ...state, isLocked: true };
-    }
-    case stateActionsLibrary.RESET: {
-      //Spreading state to keep the selectedAnswers array
-      return { ...action.payload };
+      const updatedQuestionProperties = {
+        ...currQuestionPropertiesToUpdate,
+        isLocked: true,
+      };
+      states[action.questionRef] = updatedQuestionProperties;
+      return [...states];
     }
     default: {
-      return state;
+      return states;
     }
   }
 }

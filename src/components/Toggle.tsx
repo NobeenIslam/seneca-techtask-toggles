@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { dispatchCorrectToggleStyle } from "../utils/dispatchCorrectToggleStyle";
 import {
   assessmentLibrary,
@@ -15,7 +13,8 @@ import {
 interface ToggleProps {
   toggleNum: number;
   option: string[];
-  state: StateInterface;
+  questionProperties: StateInterface;
+  questionRef: number;
   dispatch: React.Dispatch<StateAction>;
   actualAnswers: string[];
 }
@@ -29,31 +28,16 @@ interface isSelectedInterface {
 export function Toggle({
   toggleNum,
   option,
-  state,
+  questionProperties,
+  questionRef,
   dispatch,
   actualAnswers,
 }: ToggleProps): JSX.Element {
-  const [isSelected, setIsSelected] = useState<isSelectedInterface>({
-    first: false,
-    second: false,
-    third: false,
-  });
-
-  //Reset togglestates to not be selected when changing pages
-  const location = useLocation();
-  useEffect(() => {
-    setIsSelected({
-      first: false,
-      second: false,
-      third: false,
-    });
-  }, [location]);
-
-  //console.log("Toggle State", isSelected);
-
   const optionOne = option[0];
   const optionTwo = option[1];
   const optionThree: string | undefined = option[2];
+  //For a question with 4 options, the array contains 4 selected states.
+  const currSelectedTogglesForQuestion = questionProperties.selectedToggles;
 
   function handleClickToggle(
     selectedToggle: isSelectedInterface,
@@ -63,14 +47,25 @@ export function Toggle({
     if (isLocked) {
       return;
     }
-    setIsSelected(selectedToggle);
+
+    currSelectedTogglesForQuestion[toggleNum] = selectedToggle;
+    const updatedSelectedToggles = [...currSelectedTogglesForQuestion];
+
+    dispatch({
+      type: stateActionsLibrary.SET_SELECTED_TOGGLES,
+      questionRef: questionRef,
+      questionProperties: {
+        ...questionProperties,
+        selectedToggles: updatedSelectedToggles,
+      },
+    });
 
     //Update selected answers and "mark them"
-    state.selectedAnswers[toggleNum] = selectedOption; //If the first toggle, inserts selected answer into first element (0th index)
-    const newSelectedAnswers = [...state.selectedAnswers];
+    const currSelectedAnswers = [...questionProperties.selectedAnswers];
+    currSelectedAnswers[toggleNum] = selectedOption; //If the first toggle, inserts selected answer into first element (0th index)
 
     const areSelectionsCorrect: boolean[] = markSelectedAnswers(
-      newSelectedAnswers,
+      currSelectedAnswers,
       actualAnswers
     );
 
@@ -81,29 +76,35 @@ export function Toggle({
 
     dispatch({
       type: stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT,
-      payload: {
-        ...state,
-        selectedAnswers: newSelectedAnswers,
+      questionProperties: {
+        ...questionProperties,
+        selectedAnswers: currSelectedAnswers,
         answerAssessment: answerAssessment,
       },
+      questionRef: questionRef,
     });
 
     //Conditionals to set toggle styles based on how correct answer is
     dispatchCorrectToggleStyle(
       answerAssessment,
       assessmentLibrary,
-      state,
+      questionProperties,
+      questionRef,
       stateActionsLibrary,
       dispatch
     );
   }
 
-  //Style toggle if it's selected
-  const firstToggleStyle = isSelected.first ? state.toggleStyle : "unselected";
-  const secondToggleStyle = isSelected.second
-    ? state.toggleStyle
+  //Style toggle if it's selected. If one toggleNum == 0 then style that toggle
+  const firstToggleStyle = currSelectedTogglesForQuestion[toggleNum].first
+    ? questionProperties.toggleStyle
     : "unselected";
-  const thirdToggleStyle = isSelected.third ? state.toggleStyle : "unselected";
+  const secondToggleStyle = currSelectedTogglesForQuestion[toggleNum].second
+    ? questionProperties.toggleStyle
+    : "unselected";
+  const thirdToggleStyle = currSelectedTogglesForQuestion[toggleNum].third
+    ? questionProperties.toggleStyle
+    : "unselected";
 
   const sceondOptionBorder320px =
     option.length === 3 ? "borderMiddle" : "borderBottom";
@@ -115,7 +116,7 @@ export function Toggle({
           handleClickToggle(
             { first: true, second: false, third: false },
             optionOne,
-            state.isLocked
+            questionProperties.isLocked
           )
         }
         className={`buttonContainer defaultFont ${firstToggleStyle}`}
@@ -127,7 +128,7 @@ export function Toggle({
           handleClickToggle(
             { first: false, second: true, third: false },
             optionTwo,
-            state.isLocked
+            questionProperties.isLocked
           )
         }
         className={`buttonContainer defaultFont ${sceondOptionBorder320px} ${secondToggleStyle}`}
@@ -140,7 +141,7 @@ export function Toggle({
             handleClickToggle(
               { first: false, second: false, third: true },
               optionThree,
-              state.isLocked
+              questionProperties.isLocked
             )
           }
           className={`buttonContainer defaultFont borderBottom ${thirdToggleStyle}`}

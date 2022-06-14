@@ -17,47 +17,55 @@ interface QuestionProps {
 }
 
 export function QuestionPage({ questions }: QuestionProps): JSX.Element {
-  const { questionId } = useParams();
+  type urlParams = { questionId: string };
+  const { questionId } = useParams() as urlParams; //To stop typeScript suggesting it could be undefined too
 
-  let thisQuestion: QuestionInterface = {
-    questionId: 0,
-    question: "",
-    options: [],
-    answers: [],
-  };
-
-  if (questionId === undefined) {
-    console.error("useParams has extracted an undefined questionId");
-  } else {
-    thisQuestion = questions[parseInt(questionId) - 1]; //So question 1 appears as Q1 not Q0
-  }
+  const questionRef = parseInt(questionId) - 1;
+  const thisQuestion = questions[questionRef]; //So question 1 appears as Q1 not Q0
 
   const questionOptions = thisQuestion.options;
   const actualAnswers = thisQuestion.answers;
 
-  const initialState: StateInterface = {
-    selectedAnswers: new Array(questionOptions.length).fill(""),
-    //The way an answer is selected in toggle depends on the array index, so the initialised version needs to match
-    answerAssessment: "",
-    toggleStyle: "unselected",
-    isLocked: false,
-  };
+  const initialStates = [];
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  for (const question of questions) {
+    const initialQuestionState: StateInterface = {
+      selectedAnswers: new Array(question.options.length).fill(""),
+      //The way an answer is selected in toggle depends on the array index, so the initialised version needs to match
+      answerAssessment: "",
+      toggleStyle: "unselected",
+      isLocked: false,
+      selectedToggles: new Array(question.options.length).fill({
+        first: false,
+        second: false,
+        third: false,
+      }),
+    };
+    initialStates.push(initialQuestionState);
+  }
 
-  //console.log("Global State", state);
+  const [states, dispatch] = useReducer(reducer, initialStates);
+
+  // console.log({
+  //   question: states[questionRef],
+  //   selectedToggles: states[questionRef].selectedToggles,
+  // });
 
   //Everytime the assessment changes check if you need to lock the answer
   useEffect(() => {
-    if (state.answerAssessment === assessmentLibrary.CORRECT) {
-      dispatch({ type: stateActionsLibrary.SET_LOCK, payload: { ...state } });
+    if (states[questionRef].answerAssessment === assessmentLibrary.CORRECT) {
+      dispatch({
+        type: stateActionsLibrary.SET_LOCK,
+        questionProperties: states[questionRef],
+        questionRef: questionRef,
+      });
     }
     //Requesting to put state in dependancy array which triggers infinite loop.
     //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.answerAssessment]);
+  }, [states[questionRef].answerAssessment]);
 
   const backgroundStyle = determineBackgroundStyle(
-    state.answerAssessment,
+    states[questionRef].answerAssessment,
     assessmentLibrary
   );
 
@@ -66,13 +74,17 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
       key={index}
       toggleNum={index}
       option={option}
-      state={state}
+      questionProperties={states[questionRef]}
+      questionRef={questionRef}
       dispatch={dispatch}
       actualAnswers={actualAnswers}
     />
   ));
 
-  const message = createMessage(state.answerAssessment, assessmentLibrary);
+  const message = createMessage(
+    states[questionRef].answerAssessment,
+    assessmentLibrary
+  );
 
   return (
     <main className={`${backgroundStyle} pageHeight`}>

@@ -14,4 +14,3 @@ This solution assumes:
 
 Limitations:
 * Currently, the toggles to do not display a sliding animation. Branch toggle-attampt-1 contains an attempt at it's implementation, but it contains bugs. 
-* There is no persistence of the page state when navigating between questions, so a question will lock when correct, but coming back to it through navigation will refresh it.
