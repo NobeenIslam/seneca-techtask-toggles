@@ -31,12 +31,12 @@ export function reducer(
 ): StateInterface[] {
   switch (action.type) {
     case stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT: {
-      console.log("Before:", states[action.questionRef]);
+      //console.log("Before:", states[action.questionRef]);
       states[action.questionRef].selectedAnswers =
         action.questionProperties.selectedAnswers;
       states[action.questionRef].answerAssessment =
         action.questionProperties.answerAssessment;
-      console.log("After:", states[action.questionRef]);
+      //console.log("After:", states[action.questionRef]);
 
       return [...states];
     }
@@ -49,10 +49,6 @@ export function reducer(
       states[action.questionRef].isLocked = true;
       return [...states];
     }
-    // case stateActionsLibrary.RESET: {
-    //   //Spreading state to keep the selectedAnswers array
-    //   return { ...action.payload };
-    // }
     default: {
       return states;
     }
