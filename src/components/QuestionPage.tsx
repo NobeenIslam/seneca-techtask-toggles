@@ -26,18 +26,23 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
   const questionOptions = thisQuestion.options;
   const actualAnswers = thisQuestion.answers;
 
-  const initialState: StateInterface = {
-    selectedAnswers: new Array(questionOptions.length).fill(""),
-    //The way an answer is selected in toggle depends on the array index, so the initialised version needs to match
-    answerAssessment: "",
-    toggleStyle: "unselected",
-    isLocked: false,
-  };
+  const initialStates = [];
 
-  const initialStates = new Array(questions.length).fill(initialState);
+  for (const question of questions) {
+    const initialState: StateInterface = {
+      selectedAnswers: new Array(question.options.length).fill(""),
+      //The way an answer is selected in toggle depends on the array index, so the initialised version needs to match
+      answerAssessment: "",
+      toggleStyle: "unselected",
+      isLocked: false,
+    };
+    initialStates.push(initialState);
+  }
+
   const [states, dispatch] = useReducer(reducer, initialStates);
 
-  //console.log("Global State", states);
+  console.log("Global State", states);
+  console.log("Questions,", questions);
 
   //Everytime the assessment changes check if you need to lock the answer
   useEffect(() => {
