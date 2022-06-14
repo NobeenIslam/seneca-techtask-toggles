@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import { QuestionInterface } from "../utils/Interfaces";
-import {
-  StateAction,
-  stateActionsLibrary,
-} from "../utils/QuestionStateManager";
+import { StateAction } from "../utils/QuestionStateManager";
 
 interface QuestionNavsProps {
   questions: QuestionInterface[];

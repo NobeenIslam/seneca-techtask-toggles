@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { dispatchCorrectToggleStyle } from "../utils/dispatchCorrectToggleStyle";
 import {
   assessmentLibrary,
@@ -35,29 +33,9 @@ export function Toggle({
   dispatch,
   actualAnswers,
 }: ToggleProps): JSX.Element {
-  const [isSelected, setIsSelected] = useState<isSelectedInterface>({
-    first: false,
-    second: false,
-    third: false,
-  });
-
-  //Reset togglestates to not be selected when changing pages
-  const location = useLocation();
-  useEffect(() => {
-    setIsSelected({
-      first: false,
-      second: false,
-      third: false,
-    });
-  }, [location]);
-
-  //console.log("Toggle State", isSelected);
-
   const optionOne = option[0];
   const optionTwo = option[1];
   const optionThree: string | undefined = option[2];
-
- // console.log("Question Properties before click", questionProperties)
 
   function handleClickToggle(
     selectedToggle: isSelectedInterface,
@@ -67,12 +45,22 @@ export function Toggle({
     if (isLocked) {
       return;
     }
-    setIsSelected(selectedToggle);
+
+    questionProperties.selectedToggles[toggleNum] = selectedToggle;
+    const newSelectedToggles = [...questionProperties.selectedToggles];
+
+    dispatch({
+      type: stateActionsLibrary.SET_SELECTED_TOGGLES,
+      questionRef: questionRef,
+      questionProperties: {
+        ...questionProperties,
+        selectedToggles: newSelectedToggles,
+      },
+    });
 
     //Update selected answers and "mark them"
-    const currSelectedAnswers = [...questionProperties.selectedAnswers]
+    const currSelectedAnswers = [...questionProperties.selectedAnswers];
     currSelectedAnswers[toggleNum] = selectedOption; //If the first toggle, inserts selected answer into first element (0th index)
-
 
     const areSelectionsCorrect: boolean[] = markSelectedAnswers(
       currSelectedAnswers,
@@ -106,13 +94,13 @@ export function Toggle({
   }
 
   //Style toggle if it's selected
-  const firstToggleStyle = isSelected.first
+  const firstToggleStyle = questionProperties.selectedToggles[toggleNum].first
     ? questionProperties.toggleStyle
     : "unselected";
-  const secondToggleStyle = isSelected.second
+  const secondToggleStyle = questionProperties.selectedToggles[toggleNum].second
     ? questionProperties.toggleStyle
     : "unselected";
-  const thirdToggleStyle = isSelected.third
+  const thirdToggleStyle = questionProperties.selectedToggles[toggleNum].third
     ? questionProperties.toggleStyle
     : "unselected";
 

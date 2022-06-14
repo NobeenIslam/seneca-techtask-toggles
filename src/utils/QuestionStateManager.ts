@@ -2,21 +2,28 @@ export interface stateActionsLibraryInterface {
   SET_SELECTED_ANSWERS_AND_ASSESSMENT: "SET_SELECTED_ANSWERS_AND_ASSESSMENT";
   SET_TOGGLE_STYLE: "SET_TOGGLE_STYLE";
   SET_LOCK: "SET_LOCK";
-  RESET: "RESET";
+  SET_SELECTED_TOGGLES: "SET_SELECTED_TOGGLES";
 }
 
 export const stateActionsLibrary: stateActionsLibraryInterface = {
   SET_SELECTED_ANSWERS_AND_ASSESSMENT: "SET_SELECTED_ANSWERS_AND_ASSESSMENT",
   SET_TOGGLE_STYLE: "SET_TOGGLE_STYLE",
   SET_LOCK: "SET_LOCK",
-  RESET: "RESET",
+  SET_SELECTED_TOGGLES: "SET_SELECTED_TOGGLES",
 };
+
+interface isSelectedInterface {
+  first: boolean;
+  second: boolean;
+  third: boolean;
+}
 
 export interface StateInterface {
   selectedAnswers: string[];
   toggleStyle: string;
   answerAssessment: string;
   isLocked: boolean;
+  selectedToggles: isSelectedInterface[];
 }
 
 export interface StateAction {
@@ -38,6 +45,11 @@ export function reducer(
         action.questionProperties.answerAssessment;
       //console.log("After:", states[action.questionRef]);
 
+      return [...states];
+    }
+    case stateActionsLibrary.SET_SELECTED_TOGGLES: {
+      states[action.questionRef].selectedToggles =
+        action.questionProperties.selectedToggles;
       return [...states];
     }
     case stateActionsLibrary.SET_TOGGLE_STYLE: {

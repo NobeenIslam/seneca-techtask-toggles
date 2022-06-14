@@ -35,13 +35,21 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
       answerAssessment: "",
       toggleStyle: "unselected",
       isLocked: false,
+      selectedToggles: new Array(question.options.length).fill({
+        first: false,
+        second: false,
+        third: false,
+      }),
     };
     initialStates.push(initialQuestionState);
   }
 
   const [states, dispatch] = useReducer(reducer, initialStates);
 
-  //console.log("Global State", states);
+  // console.log({
+  //   question: states[questionRef],
+  //   selectedToggles: states[questionRef].selectedToggles,
+  // });
 
   //Everytime the assessment changes check if you need to lock the answer
   useEffect(() => {
