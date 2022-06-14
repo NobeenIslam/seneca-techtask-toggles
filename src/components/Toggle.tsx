@@ -57,6 +57,8 @@ export function Toggle({
   const optionTwo = option[1];
   const optionThree: string | undefined = option[2];
 
+ // console.log("Question Properties before click", questionProperties)
+
   function handleClickToggle(
     selectedToggle: isSelectedInterface,
     selectedOption: string,
@@ -68,11 +70,12 @@ export function Toggle({
     setIsSelected(selectedToggle);
 
     //Update selected answers and "mark them"
-    questionProperties.selectedAnswers[toggleNum] = selectedOption; //If the first toggle, inserts selected answer into first element (0th index)
-    const newSelectedAnswers = [...questionProperties.selectedAnswers];
+    const currSelectedAnswers = [...questionProperties.selectedAnswers]
+    currSelectedAnswers[toggleNum] = selectedOption; //If the first toggle, inserts selected answer into first element (0th index)
+
 
     const areSelectionsCorrect: boolean[] = markSelectedAnswers(
-      newSelectedAnswers,
+      currSelectedAnswers,
       actualAnswers
     );
 
@@ -85,7 +88,7 @@ export function Toggle({
       type: stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT,
       questionProperties: {
         ...questionProperties,
-        selectedAnswers: newSelectedAnswers,
+        selectedAnswers: currSelectedAnswers,
         answerAssessment: answerAssessment,
       },
       questionRef: questionRef,
