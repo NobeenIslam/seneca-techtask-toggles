@@ -17,20 +17,11 @@ interface QuestionProps {
 }
 
 export function QuestionPage({ questions }: QuestionProps): JSX.Element {
-  const { questionId } = useParams();
+  type urlParams = { questionId: string };
+  const { questionId } = useParams() as urlParams; //To stop typeScript suggesting it could be undefined too
 
-  let thisQuestion: QuestionInterface = {
-    questionId: 0,
-    question: "",
-    options: [],
-    answers: [],
-  };
-
-  if (questionId === undefined) {
-    console.error("useParams has extracted an undefined questionId");
-  } else {
-    thisQuestion = questions[parseInt(questionId) - 1]; //So question 1 appears as Q1 not Q0
-  }
+  const questionRef = parseInt(questionId) - 1;
+  const thisQuestion = questions[questionRef]; //So question 1 appears as Q1 not Q0
 
   const questionOptions = thisQuestion.options;
   const actualAnswers = thisQuestion.answers;
@@ -43,21 +34,26 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
     isLocked: false,
   };
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const initialStates = new Array(questions.length).fill(initialState);
+  const [states, dispatch] = useReducer(reducer, initialStates);
 
-  //console.log("Global State", state);
+  //console.log("Global State", states);
 
   //Everytime the assessment changes check if you need to lock the answer
   useEffect(() => {
-    if (state.answerAssessment === assessmentLibrary.CORRECT) {
-      dispatch({ type: stateActionsLibrary.SET_LOCK, payload: { ...state } });
+    if (states[questionRef].answerAssessment === assessmentLibrary.CORRECT) {
+      dispatch({
+        type: stateActionsLibrary.SET_LOCK,
+        stateProperties: states[questionRef],
+        questionRef: questionRef,
+      });
     }
     //Requesting to put state in dependancy array which triggers infinite loop.
     //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.answerAssessment]);
+  }, [states[questionRef].answerAssessment]);
 
   const backgroundStyle = determineBackgroundStyle(
-    state.answerAssessment,
+    states[questionRef].answerAssessment,
     assessmentLibrary
   );
 
@@ -66,13 +62,17 @@ export function QuestionPage({ questions }: QuestionProps): JSX.Element {
       key={index}
       toggleNum={index}
       option={option}
-      state={state}
+      state={states[questionRef]}
+      questionRef={questionRef}
       dispatch={dispatch}
       actualAnswers={actualAnswers}
     />
   ));
 
-  const message = createMessage(state.answerAssessment, assessmentLibrary);
+  const message = createMessage(
+    states[questionRef].answerAssessment,
+    assessmentLibrary
+  );
 
   return (
     <main className={`${backgroundStyle} pageHeight`}>

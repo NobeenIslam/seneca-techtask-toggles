@@ -21,19 +21,20 @@ export function QuestionNavs({
 
   //Need to reset the state when going to a new question through the link, as the state doesn't reset from initial like it does when clicking "Begin Learning"
   function handleClickNavigationButton(questionId: number) {
-    const questionDestination = questions[questionId - 1]; //Q4 accesses index 3 of array
-    const initialEmptyOptions = new Array(
-      questionDestination.options.length
-    ).fill("");
-    dispatch({
-      type: stateActionsLibrary.RESET,
-      payload: {
-        selectedAnswers: initialEmptyOptions,
-        answerAssessment: "",
-        toggleStyle: "unselected",
-        isLocked: false,
-      },
-    });
+    console.log("Shwoop");
+    // const questionDestination = questions[questionId - 1]; //Q4 accesses index 3 of array
+    // const initialEmptyOptions = new Array(
+    //   questionDestination.options.length
+    // ).fill("");
+    // dispatch({
+    //   type: stateActionsLibrary.RESET,
+    //   payload: {
+    //     selectedAnswers: initialEmptyOptions,
+    //     answerAssessment: "",
+    //     toggleStyle: "unselected",
+    //     isLocked: false,
+    //   },
+    // });
   }
 
   const questionNavigationButtons: JSX.Element[] = questionIds.map(

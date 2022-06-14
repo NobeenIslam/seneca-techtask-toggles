@@ -21,36 +21,40 @@ export interface StateInterface {
 
 export interface StateAction {
   type: string;
-  payload: StateInterface;
+  stateProperties: StateInterface;
+  questionRef: number;
 }
 
 export function reducer(
-  state: StateInterface,
+  states: StateInterface[],
   action: StateAction
-): StateInterface {
+): StateInterface[] {
   switch (action.type) {
     case stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT: {
-      return {
-        ...state,
-        selectedAnswers: action.payload.selectedAnswers,
-        answerAssessment: action.payload.answerAssessment,
-      };
+      console.log("Before:", states[action.questionRef]);
+      states[action.questionRef].selectedAnswers =
+        action.stateProperties.selectedAnswers;
+      states[action.questionRef].answerAssessment =
+        action.stateProperties.answerAssessment;
+      console.log("After:", states[action.questionRef]);
+
+      return [...states];
     }
     case stateActionsLibrary.SET_TOGGLE_STYLE: {
-      return {
-        ...state,
-        toggleStyle: action.payload.toggleStyle,
-      };
+      states[action.questionRef].toggleStyle =
+        action.stateProperties.toggleStyle;
+      return [...states];
     }
     case stateActionsLibrary.SET_LOCK: {
-      return { ...state, isLocked: true };
+      states[action.questionRef].isLocked = true;
+      return [...states];
     }
-    case stateActionsLibrary.RESET: {
-      //Spreading state to keep the selectedAnswers array
-      return { ...action.payload };
-    }
+    // case stateActionsLibrary.RESET: {
+    //   //Spreading state to keep the selectedAnswers array
+    //   return { ...action.payload };
+    // }
     default: {
-      return state;
+      return states;
     }
   }
 }

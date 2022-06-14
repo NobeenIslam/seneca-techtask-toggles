@@ -16,6 +16,7 @@ interface ToggleProps {
   toggleNum: number;
   option: string[];
   state: StateInterface;
+  questionRef: number;
   dispatch: React.Dispatch<StateAction>;
   actualAnswers: string[];
 }
@@ -30,6 +31,7 @@ export function Toggle({
   toggleNum,
   option,
   state,
+  questionRef,
   dispatch,
   actualAnswers,
 }: ToggleProps): JSX.Element {
@@ -81,11 +83,12 @@ export function Toggle({
 
     dispatch({
       type: stateActionsLibrary.SET_SELECTED_ANSWERS_AND_ASSESSMENT,
-      payload: {
+      stateProperties: {
         ...state,
         selectedAnswers: newSelectedAnswers,
         answerAssessment: answerAssessment,
       },
+      questionRef: questionRef,
     });
 
     //Conditionals to set toggle styles based on how correct answer is
@@ -93,6 +96,7 @@ export function Toggle({
       answerAssessment,
       assessmentLibrary,
       state,
+      questionRef,
       stateActionsLibrary,
       dispatch
     );
